@@ -101,8 +101,6 @@ uploads/
 # Email and sensitive data
 **/emailjs_template.html
 **/nginx.conf
-**/build-vercel.js
-**/vercel.json
 
 # Docker
 .dockerignore

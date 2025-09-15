@@ -1,0 +1,23 @@
+{
+  "version": 2,
+  "buildCommand": "npm run build --workspaces",
+  "outputDirectory": "packages/frontend/dist",
+  "functions": {
+    "packages/backend/src/index.ts": {
+      "runtime": "nodejs18.x"
+    }
+  },
+  "routes": [
+    {
+      "src": "/api/(.*)",
+      "dest": "/packages/backend/src/index.ts"
+    },
+    {
+      "src": "/(.*)",
+      "dest": "/packages/frontend/dist/$1"
+    }
+  ],
+  "env": {
+    "NODE_ENV": "production"
+  }
+}
