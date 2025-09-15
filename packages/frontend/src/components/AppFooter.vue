@@ -17,7 +17,9 @@
           </p>
           <div class="flex space-x-4">
             <a
-              href="#"
+              href="https://github.com/TheMilize"
+              target="_blank"
+              rel="noopener noreferrer"
               class="text-gray-400 hover:text-white transition-colors duration-200"
             >
               <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
@@ -37,7 +39,9 @@
               </svg>
             </a>
             <a
-              href="#"
+              href="https://x.com/shadow90414328?s=21"
+              target="_blank"
+              rel="noopener noreferrer"
               class="text-gray-400 hover:text-white transition-colors duration-200"
               title="X (Twitter)"
             >

@@ -106,7 +106,9 @@
                   </h4>
                   <div class="flex gap-4">
                     <a
-                      href="#"
+                      href="https://github.com/TheMilize"
+                      target="_blank"
+                      rel="noopener noreferrer"
                       class="text-primary-600 dark:text-primary-400 hover:underline"
                       >GitHub</a
                     >
@@ -116,9 +118,11 @@
                       >LinkedIn</a
                     >
                     <a
-                      href="#"
+                      href="https://x.com/shadow90414328?s=21"
+                      target="_blank"
+                      rel="noopener noreferrer"
                       class="text-primary-600 dark:text-primary-400 hover:underline"
-                      >Twitter</a
+                      >X</a
                     >
                   </div>
                 </div>
