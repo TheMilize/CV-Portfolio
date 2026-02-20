@@ -25,7 +25,7 @@ router.get('/', async (req: Request, res: Response): Promise<void> => {
         title: 'Task Management App',
         description: 'Приложение для управления задачами с drag-and-drop функциональностью и командной работой.',
         image: '/api/placeholder/400/300',
-        technologies: ['Vue.js', 'TypeScript', 'Firebase', 'Tailwind CSS'],
+        technologies: ['Vue.js', 'TypeScript', 'Firebase', 'CSS3'],
         demo: '#',
         github: '#',
         category: 'Frontend',

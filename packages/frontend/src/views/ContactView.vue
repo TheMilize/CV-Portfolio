@@ -113,7 +113,7 @@
                       >GitHub</a
                     >
                     <a
-                      href="#"
+                      href="https://www.linkedin.com/in/vladlen-milize-25b22339b/"
                       class="text-primary-600 dark:text-primary-400 hover:underline"
                       >LinkedIn</a
                     >
@@ -250,7 +250,7 @@ const submitForm = async () => {
   if (!form.value.name || !form.value.email || !form.value.message) {
     submitStatus.value = {
       type: "error",
-      message: "Пожалуйста, заполните все обязательные поля",
+      message: t("contact.form.error"),
     };
     return;
   }

@@ -42,23 +42,23 @@ export const generateResumePDF = (language: "en" | "ru" = "en") => {
     description: t("about.description"),
     experience: [
       {
-        position: t("about.experience.juniorFullstack"),
-        company: t("about.experience.freelance"),
+        position: t("about.practice.fullstackProjects"),
+        company: t("about.practice.personalProjects"),
         period:
           language === "en"
             ? "2023 - present"
             : "2023 - po nastoyashchee vremya",
-        description: t("about.experience.webDevDescription"),
-        technologies: ["Vue.js", "Node.js", "TypeScript", "Tailwind CSS"],
+        description: t("about.practice.fullstackDescription"),
+        technologies: ["Vue.js", "Node.js", "TypeScript", "CSS3"],
       },
       {
-        position: t("about.experience.juniorFrontend"),
-        company: t("about.experience.webStudio"),
+        position: t("about.practice.frontendProjects"),
+        company: t("about.practice.personalProjects"),
         period:
           language === "en"
             ? "2023 - present"
             : "2023 - po nastoyashchee vremya",
-        description: t("about.experience.uiDescription"),
+        description: t("about.practice.frontendDescription"),
         technologies: ["Vue.js", "JavaScript", "CSS", "HTML"],
       },
     ],
@@ -100,7 +100,6 @@ export const generateResumePDF = (language: "en" | "ru" = "en") => {
         "JavaScript",
         "HTML5",
         "CSS3",
-        "Tailwind CSS",
         "SCSS",
       ],
       backend: [
@@ -296,9 +295,9 @@ export const generateResumePDF = (language: "en" | "ru" = "en") => {
   doc.text(descriptionLines, 20, yPosition);
   yPosition += descriptionLines.length * 6 + 10;
 
-  // Опыт работы
+  // Проекты и практика
   yPosition = addSection(
-    language === "en" ? "Work Experience" : "Опыт работы",
+    language === "en" ? "Projects & Practice" : "Проекты и практика",
     yPosition,
   );
   resumeData.experience.forEach((exp) => {

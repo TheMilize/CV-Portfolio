@@ -1,38 +1,34 @@
 <template>
-  <div class="min-h-screen">
+  <div class="about-page">
     <AppHeader />
 
-    <section class="py-20">
-      <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-        <h1 class="section-title text-center">{{ t("about.title") }}</h1>
+    <section class="about-section">
+      <div class="about-container">
+        <h1 class="about-title">{{ t("about.title") }}</h1>
 
         <!-- Основная информация -->
-        <div class="card mb-12">
-          <div
-            class="flex flex-col md:flex-row items-center md:items-start gap-8"
-          >
-            <div class="flex-shrink-0">
-              <div
-                class="w-64 h-64 rounded-full overflow-hidden border-4 border-white/20 dark:border-gray-700/50 shadow-lg"
-              >
+        <div class="about-card">
+          <div class="profile-wrapper">
+            <div class="profile-image-wrapper">
+              <div class="profile-image-container">
                 <img
                   src="@/assets/images/Photo.png"
                   alt="Profile Photo"
-                  class="w-full h-full object-cover"
+                  class="profile-image"
                 />
               </div>
             </div>
-            <div class="flex-1">
-              <h2 class="text-2xl font-bold text-gray-900 dark:text-white mb-4">
+            <div class="profile-info">
+              <h2 class="profile-name">
                 {{ t("about.name") }}
               </h2>
-              <p class="text-lg text-gray-600 dark:text-gray-300 mb-6">
+              <p class="profile-description">
                 {{ t("about.description") }}
               </p>
-              <div class="flex flex-wrap gap-4">
-                <a href="mailto:shemakin.vladlen@gmail.com" class="btn-primary">
+              <div class="profile-actions">
+                <router-link to="/contact" class="btn-primary">
                   {{ t("common.writeEmail") }}
-                </a>
+                </router-link>
                 <button class="btn-secondary" @click="downloadResume">
                   {{ t("common.downloadResume") }}
                 </button>
@@ -41,40 +37,36 @@
           </div>
         </div>
 
-        <!-- Опыт работы -->
-        <div class="card mb-12">
-          <h3 class="text-2xl font-bold text-gray-900 dark:text-white mb-6">
-            {{ t("about.experience.title") }}
+        <!-- Проекты и практика -->
+        <div class="about-card">
+          <h3 class="card-title">
+            {{ t("about.practice.title") }}
           </h3>
-          <div class="space-y-8">
+          <div class="practice-list">
             <div
-              v-for="job in experience"
-              :key="job.id"
-              class="border-l-4 border-primary-500 pl-6"
+              v-for="item in practice"
+              :key="item.id"
+              class="practice-item"
             >
-              <div
-                class="flex flex-col md:flex-row md:items-center md:justify-between mb-2"
-              >
-                <h4 class="text-xl font-semibold text-gray-900 dark:text-white">
-                  {{ job.position }}
+              <div class="practice-header">
+                <h4 class="practice-position">
+                  {{ item.position }}
                 </h4>
-                <span class="text-gray-500 dark:text-gray-400">{{
-                  job.period
+                <span class="practice-period">{{
+                  item.period
                 }}</span>
               </div>
-              <p
-                class="text-primary-600 dark:text-primary-400 font-medium mb-2"
-              >
-                {{ job.company }}
+              <p class="practice-company">
+                {{ item.company }}
               </p>
-              <p class="text-gray-600 dark:text-gray-300 mb-3">
-                {{ job.description }}
+              <p class="practice-description">
+                {{ item.description }}
               </p>
-              <div class="flex flex-wrap gap-2">
+              <div class="practice-technologies">
                 <span
-                  v-for="tech in job.technologies"
+                  v-for="tech in item.technologies"
                   :key="tech"
-                  class="px-2 py-1 bg-primary-100 text-primary-700 dark:bg-primary-900/30 dark:text-primary-300 text-sm rounded"
+                  class="tech-tag"
                 >
                   {{ tech }}
                 </span>
@@ -84,27 +76,25 @@
         </div>
 
         <!-- Образование -->
-        <div class="card mb-12">
-          <h3 class="text-2xl font-bold text-gray-900 dark:text-white mb-6">
+        <div class="about-card">
+          <h3 class="card-title">
             {{ t("about.education.title") }}
           </h3>
-          <div class="space-y-6">
+          <div class="education-list">
             <div
               v-for="edu in education"
               :key="edu.id"
-              class="border-l-4 border-secondary-500 pl-6"
+              class="education-item"
             >
-              <div
-                class="flex flex-col md:flex-row md:items-center md:justify-between mb-2"
-              >
-                <h4 class="text-xl font-semibold text-gray-900 dark:text-white">
+              <div class="education-header">
+                <h4 class="education-degree">
                   {{ edu.degree }}
                 </h4>
-                <span class="text-gray-500 dark:text-gray-400">{{
+                <span class="education-period">{{
                   edu.period
                 }}</span>
               </div>
-              <p class="text-secondary-600 dark:text-secondary-400 font-medium">
+              <p class="education-institution">
                 {{ edu.institution }}
               </p>
             </div>
@@ -112,21 +102,19 @@
         </div>
 
         <!-- Интересы -->
-        <div class="card">
-          <h3 class="text-2xl font-bold text-gray-900 dark:text-white mb-6">
+        <div class="about-card">
+          <h3 class="card-title">
             {{ t("about.interests.title") }}
           </h3>
-          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div class="interests-grid">
             <div
               v-for="interest in interests"
               :key="interest.id"
-              class="flex items-start gap-4"
+              class="interest-item"
             >
-              <div
-                class="flex-shrink-0 w-12 h-12 bg-primary-100 dark:bg-primary-900/30 rounded-lg flex items-center justify-center"
-              >
+              <div class="interest-icon">
                 <svg
-                  class="w-6 h-6 text-primary-600 dark:text-primary-400"
+                  class="interest-svg"
                   fill="none"
                   stroke="currentColor"
                   viewBox="0 0 24 24"
@@ -139,11 +127,11 @@
                   />
                 </svg>
               </div>
-              <div>
-                <h4 class="font-semibold text-gray-900 dark:text-white mb-1">
+              <div class="interest-content">
+                <h4 class="interest-title">
                   {{ interest.title }}
                 </h4>
-                <p class="text-gray-600 dark:text-gray-300">
+                <p class="interest-description">
                   {{ interest.description }}
                 </p>
               </div>
@@ -163,6 +151,7 @@ import AppFooter from "@/components/AppFooter.vue";
 import { computed } from "vue";
 import { useTranslations } from "@/locales";
 import { generateResumePDF } from "@/utils/resumeGenerator";
+import "./AboutView.css";
 
 const { t, currentLanguage } = useTranslations();
 
@@ -170,21 +159,21 @@ const downloadResume = () => {
   generateResumePDF(currentLanguage.value);
 };
 
-const experience = computed(() => [
+const practice = computed(() => [
   {
     id: 1,
-    position: t("about.experience.juniorFullstack"),
-    company: t("about.experience.freelance"),
+    position: t("about.practice.fullstackProjects"),
+    company: t("about.practice.personalProjects"),
     period: `2023 - ${t("about.education.present")}`,
-    description: t("about.experience.webDevDescription"),
-    technologies: ["Vue.js", "Node.js", "TypeScript", "Tailwind CSS"],
+    description: t("about.practice.fullstackDescription"),
+    technologies: ["Vue.js", "Node.js", "TypeScript", "CSS3"],
   },
   {
     id: 2,
-    position: t("about.experience.juniorFrontend"),
-    company: t("about.experience.webStudio"),
+    position: t("about.practice.frontendProjects"),
+    company: t("about.practice.personalProjects"),
     period: `2023 - ${t("about.education.present")}`,
-    description: t("about.experience.uiDescription"),
+    description: t("about.practice.frontendDescription"),
     technologies: ["Vue.js", "JavaScript", "CSS", "HTML"],
   },
 ]);

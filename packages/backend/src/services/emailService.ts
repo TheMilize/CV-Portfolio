@@ -4,39 +4,110 @@ let cachedTransporter: nodemailer.Transporter | null = null
 let defaultFromAddress: string | undefined = process.env.SMTP_USER
 
 // Инициализация транспорта: если нет SMTP_USER/PASS, создаём тестовый Ethereal аккаунт
-const getTransporter = async (): Promise<nodemailer.Transporter> => {
+const getTransporter = async (): Promise<nodemailer.Transporter | null> => {
   if (cachedTransporter) return cachedTransporter
 
   const hasRealSmtpCreds = Boolean(process.env.SMTP_USER && process.env.SMTP_PASS)
+  
+  // Логируем состояние переменных окружения для отладки
+  console.log('[email] Проверка SMTP настроек:')
+  console.log(`[email] SMTP_USER: ${process.env.SMTP_USER ? '✅ установлен' : '❌ не установлен'}`)
+  console.log(`[email] SMTP_PASS: ${process.env.SMTP_PASS ? '✅ установлен' : '❌ не установлен'}`)
+  console.log(`[email] SMTP_HOST: ${process.env.SMTP_HOST || 'smtp.gmail.com (по умолчанию)'}`)
 
   if (hasRealSmtpCreds) {
-    cachedTransporter = nodemailer.createTransport({
-      host: process.env.SMTP_HOST || 'smtp.gmail.com',
-      port: parseInt(process.env.SMTP_PORT || '587'),
-      secure: String(process.env.SMTP_PORT || '587') === '465',
-      auth: {
-        user: process.env.SMTP_USER,
-        pass: process.env.SMTP_PASS,
-      },
-    })
-    defaultFromAddress = process.env.SMTP_USER
-    return cachedTransporter
+    try {
+      const smtpHost = process.env.SMTP_HOST || 'smtp.gmail.com'
+      const smtpPort = parseInt(process.env.SMTP_PORT || '587')
+      const isGmail = smtpHost.includes('gmail.com')
+      
+      // Убираем пробелы из пароля, если они есть (Gmail App Password обычно без пробелов)
+      const smtpPass = (process.env.SMTP_PASS || '').replace(/\s+/g, '')
+      
+      // Если есть SendGrid API ключ, используем его
+      if (process.env.SENDGRID_API_KEY) {
+        cachedTransporter = nodemailer.createTransport({
+          host: 'smtp.sendgrid.net',
+          port: 587,
+          auth: {
+            user: 'apikey',
+            pass: process.env.SENDGRID_API_KEY,
+          },
+        })
+      } else {
+        // Иначе пробуем Gmail
+        cachedTransporter = nodemailer.createTransport({
+        service: 'gmail',
+        auth: {
+          user: process.env.SMTP_USER,
+          pass: smtpPass,
+        },
+        tls: {
+          rejectUnauthorized: false
+        },
+        connectionTimeout: 30000,
+        greetingTimeout: 30000,
+        socketTimeout: 30000
+      })
+      }
+      
+      // Проверяем подключение (опционально, может вызывать проблемы)
+      try {
+        await cachedTransporter.verify()
+        console.log(`[email] Подключение к SMTP серверу успешно проверено`)
+      } catch (verifyError) {
+        const error = verifyError as Error
+        console.log(`[email] ⚠️  Проверка подключения не удалась, но пробуем отправить...`)
+        console.log(`[email] Ошибка verify: ${error.message}`)
+      }
+      
+      defaultFromAddress = process.env.SMTP_USER
+      console.log(`[email] ✅ Используется реальный SMTP сервер: ${smtpHost}:${smtpPort}`)
+      console.log(`[email] Отправитель: ${defaultFromAddress}`)
+      return cachedTransporter
+    } catch (error) {
+      const err = error as Error
+      console.error('[email] ❌ Ошибка при создании SMTP транспорта:')
+      console.error('[email] Сообщение:', err.message)
+      console.error('[email] Код:', (error as any)?.code)
+      console.error('[email] Стек:', err.stack)
+      
+      // Дополнительные подсказки для Gmail
+      if (err.message.includes('Invalid login') || err.message.includes('authentication')) {
+        console.error('[email] 💡 Подсказка: Проверьте правильность пароля приложения Gmail')
+        console.error('[email] 💡 Убедитесь, что в аккаунте включена двухфакторная аутентификация')
+        console.error('[email] 💡 Пароль приложения должен быть без пробелов')
+      }
+      
+      return null
+    }
   }
 
   // Fallback: Ethereal для локальной разработки
-  const testAccount = await nodemailer.createTestAccount()
-  cachedTransporter = nodemailer.createTransport({
-    host: 'smtp.ethereal.email',
-    port: 587,
-    secure: false,
-    auth: {
-      user: testAccount.user,
-      pass: testAccount.pass,
-    },
-  })
-  defaultFromAddress = testAccount.user
-  console.warn('[email] Используется Ethereal SMTP (локальная отладка).')
-  return cachedTransporter
+  try {
+    console.log('[email] Попытка создать Ethereal тестовый аккаунт...')
+    const testAccount = await nodemailer.createTestAccount()
+    cachedTransporter = nodemailer.createTransport({
+      host: 'smtp.ethereal.email',
+      port: 587,
+      secure: false,
+      auth: {
+        user: testAccount.user,
+        pass: testAccount.pass,
+      },
+    })
+    defaultFromAddress = testAccount.user
+    console.warn('\n[email] ⚠️  ВНИМАНИЕ: Используется Ethereal SMTP (тестовый режим)')
+    console.warn('[email] Письма НЕ будут отправляться реально!')
+    console.warn('[email] Это только для локальной разработки и тестирования')
+    console.log(`[email] Ethereal аккаунт: ${testAccount.user}`)
+    console.log(`[email] Для реальной отправки настройте SMTP_USER и SMTP_PASS в .env\n`)
+    return cachedTransporter
+  } catch (error) {
+    console.error('[email] Не удалось создать Ethereal аккаунт:', error)
+    console.warn('[email] Письма будут логироваться в консоль (локальная разработка)')
+    return null
+  }
 }
 
 export interface EmailData {
@@ -49,24 +120,85 @@ export interface EmailData {
 export const sendEmail = async (emailData: EmailData): Promise<boolean> => {
   try {
     const transporter = await getTransporter()
-    const mailOptions = {
+    
+    // Если транспортер не создан (нет SMTP и Ethereal не работает), логируем в консоль
+    if (!transporter) {
+      console.log('\n========== EMAIL (LOCAL DEV MODE) ==========')
+      console.log('To:', emailData.to)
+      console.log('Subject:', emailData.subject)
+      console.log('Text:', emailData.text)
+      if (emailData.html) {
+        console.log('HTML:', emailData.html.substring(0, 200) + '...')
+      }
+      console.log('==========================================\n')
+      return true // Возвращаем true, так как письмо "отправлено" (залогировано)
+    }
+
+    // Добавляем BCC на адрес отправителя, чтобы письмо сохранилось в "Отправленные" Gmail
+    const mailOptions: any = {
       from: defaultFromAddress,
       to: emailData.to,
       subject: emailData.subject,
       text: emailData.text,
       html: emailData.html,
     }
+    
+    // Если отправляем через Gmail и адрес отправителя указан, добавляем BCC для сохранения в "Отправленные"
+    if (defaultFromAddress && defaultFromAddress.includes('@gmail.com') && emailData.to !== defaultFromAddress) {
+      mailOptions.bcc = defaultFromAddress
+      console.log(`[email] Добавлена скрытая копия (BCC) для сохранения в "Отправленные": ${defaultFromAddress}`)
+    }
 
+    console.log(`[email] Отправка письма:`)
+    console.log(`[email]   От: ${mailOptions.from}`)
+    console.log(`[email]   Кому: ${mailOptions.to}`)
+    console.log(`[email]   Тема: ${mailOptions.subject}`)
+    
     const info = await transporter.sendMail(mailOptions)
+    
     // Если Ethereal — выведем preview URL для удобства
     const previewUrl = nodemailer.getTestMessageUrl(info)
     if (previewUrl) {
-      console.log(`[email] Preview URL: ${previewUrl}`)
+      console.log(`\n[email] ⚠️  ВНИМАНИЕ: Используется Ethereal Email (тестовый SMTP)`)
+      console.log(`[email] Письмо НЕ отправлено реально, только для тестирования!`)
+      console.log(`[email] Preview URL для просмотра письма: ${previewUrl}\n`)
+      console.log(`[email] 💡 Для реальной отправки настройте SMTP_USER и SMTP_PASS в .env\n`)
+    } else {
+      console.log(`[email] ✅ Письмо отправлено успешно через реальный SMTP`)
+      console.log(`[email] Message ID: ${info.messageId}`)
+      console.log(`[email] Письмо должно прийти на: ${mailOptions.to}`)
+      console.log(`[email] 💡 Проверьте папку "Входящие" и "Спам"\n`)
     }
     return true
   } catch (error) {
-    console.error('Error sending email:', error)
-    return false
+    const err = error as Error
+    console.error('[email] ❌ Ошибка при отправке письма:')
+    console.error('[email] Сообщение:', err.message)
+    console.error('[email] Код:', (error as any)?.code)
+    console.error('[email] Команда:', (error as any)?.command)
+    console.error('[email] Стек:', err.stack)
+    
+    // Специфичные ошибки Gmail
+    if (err.message.includes('Invalid login') || err.message.includes('authentication')) {
+      console.error('[email] 💡 Проблема с аутентификацией Gmail')
+      console.error('[email] 💡 Проверьте пароль приложения (должен быть без пробелов)')
+    } else if (err.message.includes('ECONNREFUSED') || err.message.includes('ETIMEDOUT')) {
+      console.error('[email] 💡 Проблема с подключением к SMTP серверу')
+      console.error('[email] 💡 Проверьте интернет-соединение и настройки SMTP_HOST/SMTP_PORT')
+    }
+    
+    // Логируем письмо в консоль как fallback
+    console.log('\n========== EMAIL (FALLBACK - LOGGED TO CONSOLE) ==========')
+    console.log('To:', emailData.to)
+    console.log('Subject:', emailData.subject)
+    console.log('Text:', emailData.text)
+    console.log('==========================================================\n')
+    
+    // Возвращаем специальный объект для fallback режима
+    const fallbackError = new Error('SMTP fallback mode - email logged to console')
+    ;(fallbackError as any).code = 'ESOCKET'
+    ;(fallbackError as any).isFallback = true
+    throw fallbackError
   }
 }
 
@@ -76,8 +208,15 @@ export const sendContactFormEmail = async (data: {
   subject: string
   message: string
 }): Promise<boolean> => {
+  const contactEmail = process.env.CONTACT_EMAIL || process.env.SMTP_USER || 'contact@example.com'
+  
+  console.log(`\n[email] 📧 Подготовка к отправке контактной формы:`)
+  console.log(`[email] Получатель: ${contactEmail}`)
+  console.log(`[email] От: ${data.name} (${data.email})`)
+  console.log(`[email] Тема: ${data.subject}\n`)
+  
   const emailData: EmailData = {
-    to: process.env.CONTACT_EMAIL || 'contact@example.com',
+    to: contactEmail,
     subject: `Новое сообщение от ${data.name}`,
     text: `Имя: ${data.name}\nEmail: ${data.email}\nТема: ${data.subject}\nСообщение: ${data.message}`,
     html: `<!DOCTYPE html>

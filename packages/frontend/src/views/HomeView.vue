@@ -158,7 +158,7 @@ const skills = [
       { name: "Vue.js", level: 90 },
       { name: "React", level: 85 },
       { name: "TypeScript", level: 80 },
-      { name: "Tailwind CSS", level: 85 },
+      { name: "CSS3", level: 90 },
     ],
   },
   {

@@ -31,14 +31,13 @@ export interface Translations {
     downloadResume: string;
     name: string;
     description: string;
-    experience: {
+    practice: {
       title: string;
-      juniorFullstack: string;
-      juniorFrontend: string;
-      freelance: string;
-      webStudio: string;
-      webDevDescription: string;
-      uiDescription: string;
+      fullstackProjects: string;
+      frontendProjects: string;
+      personalProjects: string;
+      fullstackDescription: string;
+      frontendDescription: string;
     };
     education: {
       title: string;
@@ -175,16 +174,15 @@ export const translations: Record<string, Translations> = {
       name: "Vladlen Milize",
       description:
         "Passionate full-stack developer with 1+ year of experience creating modern web applications. I specialize in Vue.js, Node.js and TypeScript. I love learning new technologies and creating quality products.",
-      experience: {
-        title: "Work Experience",
-        juniorFullstack: "Junior Full-stack Developer",
-        juniorFrontend: "Junior Frontend Developer",
-        freelance: "Freelance",
-        webStudio: "Web Studio",
-        webDevDescription:
-          "Development of web applications and landing pages for clients. Studying modern technologies.",
-        uiDescription:
-          "Creating user interfaces and studying modern frameworks.",
+      practice: {
+        title: "Projects & Practice",
+        fullstackProjects: "Full-stack Developer",
+        frontendProjects: "Frontend Developer",
+        personalProjects: "Personal & Freelance Projects",
+        fullstackDescription:
+          "Full-stack development of personal and freelance projects. Building modern web applications.",
+        frontendDescription:
+          "Frontend development for personal and freelance projects. Creating user interfaces and web applications.",
       },
       education: {
         title: "Education",
@@ -286,7 +284,7 @@ export const translations: Record<string, Translations> = {
       downloadResume: "Download Resume",
       navigation: "Navigation",
       contactInfo: "Contact Information",
-      copyright: "© 2024 Portfolio. All rights reserved.",
+      copyright: "© 2025 Portfolio. All rights reserved.",
       privacyPolicy: "Privacy Policy",
       termsOfService: "Terms of Service",
       demoNotAvailable:
@@ -335,16 +333,15 @@ export const translations: Record<string, Translations> = {
       name: "Владлен Милизе",
       description:
         "Увлеченный full-stack разработчик с 1+ годом опыта создания современных веб-приложений. Специализируюсь на Vue.js, Node.js и TypeScript. Люблю изучать новые технологии и создавать качественные продукты.",
-      experience: {
-        title: "Опыт работы",
-        juniorFullstack: "Junior Full-stack Developer",
-        juniorFrontend: "Junior Frontend Developer",
-        freelance: "Freelance",
-        webStudio: "Web Studio",
-        webDevDescription:
-          "Разработка веб-приложений и лендингов для клиентов. Изучение современных технологий.",
-        uiDescription:
-          "Создание пользовательских интерфейсов и изучение современных фреймворков.",
+      practice: {
+        title: "Проекты и практика",
+        fullstackProjects: "Full-stack разработчик",
+        frontendProjects: "Frontend разработчик",
+        personalProjects: "Личные и фриланс проекты",
+        fullstackDescription:
+          "Full-stack разработка личных и фриланс проектов. Создание современных веб-приложений.",
+        frontendDescription:
+          "Frontend разработка личных и фриланс проектов. Создание пользовательских интерфейсов и веб-приложений.",
       },
       education: {
         title: "Образование",
@@ -449,7 +446,7 @@ export const translations: Record<string, Translations> = {
       downloadResume: "Скачать резюме",
       navigation: "Навигация",
       contactInfo: "Контактная информация",
-      copyright: "© 2024 Портфолио. Все права защищены.",
+      copyright: "© 2025 Портфолио. Все права защищены.",
       privacyPolicy: "Политика конфиденциальности",
       termsOfService: "Условия использования",
       demoNotAvailable:

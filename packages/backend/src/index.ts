@@ -9,10 +9,28 @@ import projectRoutes from './routes/projects'
 import contactRoutes from './routes/contact'
 
 // Загрузка переменных окружения
-dotenv.config()
+dotenv.config({ path: '../../.env' })
+
+// Явно устанавливаем порт
+const PORT = process.env.PORT || 5001
+
+// Проверка переменных окружения для email
+const checkEmailConfig = () => {
+  const hasSmtpCreds = Boolean(process.env.SMTP_USER && process.env.SMTP_PASS)
+  if (hasSmtpCreds) {
+    console.log('📧 Email конфигурация: ✅ Настроена (SMTP)')
+    console.log(`   SMTP Host: ${process.env.SMTP_HOST || 'smtp.gmail.com'}`)
+    console.log(`   SMTP User: ${process.env.SMTP_USER}`)
+    console.log(`   Contact Email: ${process.env.CONTACT_EMAIL || process.env.SMTP_USER}`)
+  } else {
+    console.log('📧 Email конфигурация: ⚠️  Не настроена (будет использован Ethereal для тестирования)')
+    console.log('   Для production добавьте SMTP_USER и SMTP_PASS в .env')
+  }
+}
+
+checkEmailConfig()
 
 const app = express()
-const PORT = process.env.PORT || 5001
 
 // Middleware
 app.use(helmet())
