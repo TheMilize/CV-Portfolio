@@ -1,0 +1,11 @@
+{
+  "version": 2,
+  "installCommand": "cd ../.. && npm install",
+  "buildCommand": "cd ../.. && npm run build && cp -r dist packages/backend/frontend-dist",
+  "outputDirectory": "frontend-dist",
+  "rewrites": [
+    { "source": "/api/:path*", "destination": "/api/:path*" },
+    { "source": "/(.*)", "destination": "/index.html" }
+  ],
+  "env": { "NODE_ENV": "production", "VERCEL": "1" }
+}
