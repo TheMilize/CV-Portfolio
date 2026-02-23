@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "buildCommand": "npm run build --workspaces",
+  "buildCommand": "npm run build",
   "outputDirectory": "packages/frontend/dist",
   "functions": {
     "packages/backend/src/index.ts": {
