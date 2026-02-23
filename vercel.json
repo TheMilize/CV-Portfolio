@@ -11,7 +11,11 @@
     { "source": "/(.*)", "destination": "/index.html" }
   ],
   "routes": [
-    { "src": "/api/(.*)", "dest": "/packages/backend/dist/index.js" }
+    {
+      "src": "/api/(.*)",
+      "dest": "/packages/backend/dist/index.js",
+      "methods": ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"]
+    }
   ],
   "env": { "NODE_ENV": "production", "VERCEL": "1" }
 }

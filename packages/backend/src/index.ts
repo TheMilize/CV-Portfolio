@@ -33,11 +33,14 @@ app.use(
   cors({
     origin: [
       process.env.FRONTEND_URL || 'http://localhost:3000',
+      process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : '',
+      process.env.VERCEL_URL ? `https://www.${process.env.VERCEL_URL}` : '',
       'http://localhost:3001',
       'http://127.0.0.1:5173',
       'http://localhost:5173',
-    ],
+    ].filter(Boolean),
     credentials: true,
+    methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
   })
 )
 app.use(morgan(isVercel ? 'short' : 'combined'))
