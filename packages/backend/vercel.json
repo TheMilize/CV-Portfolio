@@ -1,7 +1,7 @@
 {
   "version": 2,
   "installCommand": "cd ../.. && npm install",
-  "buildCommand": "cd ../.. && npm run build && cp -r dist packages/backend/frontend-dist",
+  "buildCommand": "cd ../.. && npm run build && (cp -r dist packages/backend/frontend-dist || cp -r packages/frontend/dist packages/backend/frontend-dist)",
   "outputDirectory": "frontend-dist",
   "rewrites": [
     { "source": "/api/:path*", "destination": "/api/:path*" },
