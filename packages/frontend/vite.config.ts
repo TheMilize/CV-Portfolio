@@ -20,7 +20,8 @@ export default defineConfig({
     },
   },
   build: {
-    outDir: "dist",
+    // На Vercel выводим в корень репо, чтобы outputDirectory "dist" всегда находился
+    outDir: process.env.VERCEL ? resolve(__dirname, "../../dist") : "dist",
     sourcemap: true,
   },
 });

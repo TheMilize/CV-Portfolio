@@ -8,11 +8,6 @@ Modern portfolio website designed for deployment on Vercel.
 - **Backend**: Node.js + Express API (serverless on Vercel), contact form delivery via SMTP/SendGrid.
 - **Features**: projects showcase, contact form, PDF resume generation (EN/RU).
 
-## Vercel
-
-- Static frontend is served from `packages/frontend/dist`.
-- API is available under `/api/*` and handled by the backend function.
-
 ## Project structure
 
 ```
