@@ -5,7 +5,6 @@
       aria-label="Toggle theme"
       @click="isOpen = !isOpen"
     >
-      <!-- Light theme icon -->
       <svg
         v-if="isDark"
         class="w-5 h-5 text-yellow-500"
@@ -19,7 +18,6 @@
         />
       </svg>
 
-      <!-- Dark theme icon -->
       <svg
         v-else
         class="w-5 h-5 text-gray-700"
@@ -51,7 +49,6 @@
       </svg>
     </button>
 
-    <!-- Dropdown menu -->
     <div
       v-if="isOpen"
       class="absolute right-0 mt-2 w-48 bg-white dark:bg-gray-800 rounded-lg shadow-lg border border-gray-200 dark:border-gray-700 z-50"
@@ -125,7 +122,6 @@ const selectTheme = (newTheme: "light" | "dark" | "system") => {
   isOpen.value = false;
 };
 
-// Close dropdown when clicking outside
 const handleClickOutside = (event: Event) => {
   const target = event.target as Element;
   if (!target.closest(".relative")) {
@@ -133,7 +129,6 @@ const handleClickOutside = (event: Event) => {
   }
 };
 
-// Add click outside listener
 onMounted(() => {
   document.addEventListener("click", handleClickOutside);
 });

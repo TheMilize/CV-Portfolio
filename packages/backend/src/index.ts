@@ -1,3 +1,5 @@
+import path from 'path'
+import fs from 'fs'
 import express from 'express'
 import cors from 'cors'
 import helmet from 'helmet'
@@ -8,69 +10,59 @@ import { notFound } from './middleware/notFound'
 import projectRoutes from './routes/projects'
 import contactRoutes from './routes/contact'
 
-// Загрузка переменных окружения
-dotenv.config({ path: '../../.env' })
-
-// Явно устанавливаем порт
-const PORT = process.env.PORT || 5001
-
-// Проверка переменных окружения для email
-const checkEmailConfig = () => {
-  const hasSmtpCreds = Boolean(process.env.SMTP_USER && process.env.SMTP_PASS)
-  if (hasSmtpCreds) {
-    console.log('📧 Email конфигурация: ✅ Настроена (SMTP)')
-    console.log(`   SMTP Host: ${process.env.SMTP_HOST || 'smtp.gmail.com'}`)
-    console.log(`   SMTP User: ${process.env.SMTP_USER}`)
-    console.log(`   Contact Email: ${process.env.CONTACT_EMAIL || process.env.SMTP_USER}`)
-  } else {
-    console.log('📧 Email конфигурация: ⚠️  Не настроена (будет использован Ethereal для тестирования)')
-    console.log('   Для production добавьте SMTP_USER и SMTP_PASS в .env')
-  }
+const candidates = [
+  path.resolve(process.cwd(), '../../.env'),
+  path.resolve(process.cwd(), '.env'),
+  path.resolve(__dirname, '../../../.env'),
+]
+const envPath = candidates.find((p) => fs.existsSync(p))
+if (envPath) {
+  dotenv.config({ path: envPath })
+  // console.log('[env] loaded:', envPath)
+} else {
+  // console.warn('[env] .env not found. candidates:', candidates)
 }
 
-checkEmailConfig()
+const PORT = process.env.PORT || 5001
+const isVercel = process.env.VERCEL === '1'
 
 const app = express()
 
-// Middleware
 app.use(helmet())
-app.use(cors({
-  origin: [
-    process.env.FRONTEND_URL || 'http://localhost:3000',
-    'http://localhost:3001',
-    'http://127.0.0.1:49876',
-    'http://localhost:49876',
-    'http://127.0.0.1:51946',
-    'http://localhost:51946'
-  ],
-  credentials: true
-}))
-app.use(morgan('combined'))
-app.use(express.json({ limit: '10mb' }))
+app.use(
+  cors({
+    origin: [
+      process.env.FRONTEND_URL || 'http://localhost:3000',
+      'http://localhost:3001',
+      'http://127.0.0.1:5173',
+      'http://localhost:5173',
+    ],
+    credentials: true,
+  })
+)
+app.use(morgan(isVercel ? 'short' : 'combined'))
+app.use(express.json({ limit: '1mb' }))
 app.use(express.urlencoded({ extended: true }))
 
-// Routes
 app.use('/api/projects', projectRoutes)
 app.use('/api/contact', contactRoutes)
 
-// Health check
-app.get('/api/health', (req, res) => {
-  res.json({ 
-    status: 'OK', 
+app.get('/api/health', (_req, res) => {
+  res.json({
+    status: 'OK',
     timestamp: new Date().toISOString(),
-    environment: process.env.NODE_ENV || 'development'
+    environment: process.env.NODE_ENV || 'development',
   })
 })
 
-// Error handling
 app.use(notFound)
 app.use(errorHandler)
 
-// Start server
-app.listen(PORT, () => {
-  console.log(`🚀 Server running on port ${PORT}`)
-  console.log(`📊 Environment: ${process.env.NODE_ENV || 'development'}`)
-  console.log(`🌐 Frontend URL: ${process.env.FRONTEND_URL || 'http://localhost:3000'}`)
-})
+if (!isVercel) {
+  app.listen(PORT, () => {
+    // console.log(`Server running on port ${PORT}`)
+    // console.log(`Environment: ${process.env.NODE_ENV || 'development'}`)
+  })
+}
 
 export default app 

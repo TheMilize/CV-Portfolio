@@ -2,9 +2,7 @@
   <div class="min-h-screen">
     <AppHeader />
 
-    <!-- Hero Section -->
     <section class="bg-gradient-hero py-32 relative overflow-hidden">
-      <!-- Animated background elements -->
       <div class="absolute inset-0 overflow-hidden">
         <div
           class="absolute -top-40 -right-40 w-80 h-80 bg-primary-300 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-pulse"
@@ -42,7 +40,6 @@
       </div>
     </section>
 
-    <!-- Skills Section -->
     <section class="py-32 bg-gradient-primary">
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <h2 class="section-title text-center">{{ t("home.skills.title") }}</h2>
@@ -82,7 +79,6 @@
       </div>
     </section>
 
-    <!-- Statistics Section -->
     <section class="py-20 bg-gradient-primary">
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="grid grid-cols-2 md:grid-cols-4 gap-8">
@@ -113,7 +109,6 @@
       </div>
     </section>
 
-    <!-- Featured Projects -->
     <section
       class="py-32 bg-gradient-to-br from-gray-50 via-white to-gray-100 dark:from-gray-800 dark:via-gray-900 dark:to-gray-950"
     >
@@ -184,6 +179,17 @@ const skills = [
 const featuredProjects = [
   {
     id: 1,
+    title: "3D Model Viewer",
+    descriptionKey: "projects.descriptions.vue3dModelViewer",
+    technologies: ["Vue.js", "Three.js", "Vite", "Docker"],
+    demo: "https://github.com/TheMilize/vue-3d-model-viewer",
+    github: "https://github.com/TheMilize/vue-3d-model-viewer",
+    category: "frontend",
+    date: "2026",
+    type: "personal",
+  },
+  {
+    id: 2,
     title: "Office Space Frontend",
     descriptionKey: "projects.descriptions.officeSpaceFrontend",
     technologies: ["Vue.js", "TypeScript", "CSS3"],
@@ -194,7 +200,7 @@ const featuredProjects = [
     type: "personal",
   },
   {
-    id: 2,
+    id: 3,
     title: "Office Space Backend",
     descriptionKey: "projects.descriptions.officeSpaceBackend",
     technologies: ["Node.js", "TypeScript", "PostgreSQL"],
@@ -205,7 +211,7 @@ const featuredProjects = [
     type: "personal",
   },
   {
-    id: 3,
+    id: 4,
     title: "Task Management App",
     descriptionKey: "projects.descriptions.taskManagement",
     technologies: ["Vue.js", "TypeScript", "Firebase"],
@@ -216,7 +222,7 @@ const featuredProjects = [
     type: "personal",
   },
   {
-    id: 4,
+    id: 5,
     title: "DnD Character Generator",
     descriptionKey: "projects.descriptions.dnd",
     technologies: ["React.js", "JavaScript", "CSS3"],
@@ -227,7 +233,7 @@ const featuredProjects = [
     type: "personal",
   },
   {
-    id: 5,
+    id: 6,
     title: "Memory Game",
     descriptionKey: "projects.descriptions.memory",
     technologies: ["Vue.js", "JavaScript", "CSS3"],
@@ -238,7 +244,7 @@ const featuredProjects = [
     type: "personal",
   },
   {
-    id: 6,
+    id: 7,
     title: "Effective Mobile Frontend",
     descriptionKey: "projects.descriptions.effectiveFrontend",
     technologies: ["Vue.js", "TypeScript", "CSS3"],

@@ -79,6 +79,7 @@ export interface Translations {
     previous: string;
     next: string;
     descriptions: {
+      vue3dModelViewer: string;
       ecommerce: string;
       taskManagement: string;
       restApi: string;
@@ -173,7 +174,7 @@ export const translations: Record<string, Translations> = {
       downloadResume: "Download Resume",
       name: "Vladlen Milize",
       description:
-        "Passionate full-stack developer with 1+ year of experience creating modern web applications. I specialize in Vue.js, Node.js and TypeScript. I love learning new technologies and creating quality products.",
+        "Passionate full-stack developer with 1+ year of non-commercial experience (personal and freelance projects) creating modern web applications. I specialize in Vue.js, Node.js and TypeScript. I love learning new technologies and creating quality products.",
       practice: {
         title: "Projects & Practice",
         fullstackProjects: "Full-stack Developer",
@@ -229,6 +230,8 @@ export const translations: Record<string, Translations> = {
       previous: "Previous",
       next: "Next",
       descriptions: {
+        vue3dModelViewer:
+          "Web app for viewing 3D models. Supports glTF/GLB, OBJ, PLY, drag-and-drop, camera controls, background toggle, screenshots.",
         ecommerce:
           "Modern e-commerce platform with full shopping cart, payment and product management functionality.",
         taskManagement:
@@ -332,7 +335,7 @@ export const translations: Record<string, Translations> = {
       downloadResume: "Скачать резюме",
       name: "Владлен Милизе",
       description:
-        "Увлеченный full-stack разработчик с 1+ годом опыта создания современных веб-приложений. Специализируюсь на Vue.js, Node.js и TypeScript. Люблю изучать новые технологии и создавать качественные продукты.",
+        "Увлеченный full-stack разработчик с 1+ годом некоммерческого опыта (личные и фриланс проекты) создания современных веб-приложений. Специализируюсь на Vue.js, Node.js и TypeScript. Люблю изучать новые технологии и создавать качественные продукты.",
       practice: {
         title: "Проекты и практика",
         fullstackProjects: "Full-stack разработчик",
@@ -411,6 +414,8 @@ export const translations: Record<string, Translations> = {
           "Фронтенд моего самого важного проекта, который стал моей дипломной работой.",
         officeSpaceBackend:
           "Бэкенд моего самого важного проекта, который стал моей дипломной работой.",
+        vue3dModelViewer:
+          "Веб-приложение для просмотра 3D-моделей. Поддержка glTF/GLB, OBJ, PLY, drag-and-drop, управление камерой, смена фона, скриншоты.",
       },
     },
     contact: {
@@ -473,11 +478,11 @@ export const useTranslations = () => {
 
   const t = computed(() => (key: string): string => {
     const keys = key.split(".");
-    let value: any = translations[currentLanguage.value];
+    let value: unknown = translations[store.currentLanguage];
 
     for (const k of keys) {
       if (value && typeof value === "object" && k in value) {
-        value = value[k];
+        value = (value as Record<string, unknown>)[k];
       } else {
         return key;
       }
@@ -486,5 +491,8 @@ export const useTranslations = () => {
     return typeof value === "string" ? value : key;
   });
 
-  return { t: t.value, currentLanguage };
+  // Обёртка, чтобы шаблон всегда получал перевод для текущего языка (реактивность)
+  const translate = (key: string): string => t.value(key);
+
+  return { t: translate, currentLanguage };
 };

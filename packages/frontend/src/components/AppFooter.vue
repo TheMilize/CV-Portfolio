@@ -2,7 +2,6 @@
   <footer class="bg-gray-900 dark:bg-gray-950 text-white">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
       <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
-        <!-- Логотип и описание -->
         <div class="col-span-1 md:col-span-2">
           <div class="flex items-center space-x-2 mb-4">
             <div
@@ -29,7 +28,9 @@
               </svg>
             </a>
             <a
-              href="#"
+              href="https://www.linkedin.com/in/vladlen-milize-25b22339b/"
+              target="_blank"
+              rel="noopener noreferrer"
               class="text-gray-400 hover:text-white transition-colors duration-200"
             >
               <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
@@ -54,7 +55,6 @@
           </div>
         </div>
 
-        <!-- Навигация -->
         <div>
           <h3 class="text-lg font-semibold mb-4">
             {{ t("common.navigation") }}
@@ -95,7 +95,6 @@
           </ul>
         </div>
 
-        <!-- Контакты -->
         <div>
           <h3 class="text-lg font-semibold mb-4">
             {{ t("common.contactInfo") }}
@@ -148,7 +147,6 @@
         </div>
       </div>
 
-      <!-- Нижняя часть футера -->
       <div
         class="border-t border-gray-800 mt-8 pt-8 flex flex-col md:flex-row justify-between items-center"
       >

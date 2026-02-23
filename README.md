@@ -1,147 +1,60 @@
-# 🚀 CV Portfolio
+# Portfolio (Vercel-ready)
 
-Современное портфолио с Vue.js фронтендом и Node.js бэкендом, полностью контейнеризованное с Docker.
+Modern portfolio website designed for deployment on Vercel.
 
-## 🐳 Быстрый старт с Docker
+## Overview
 
-### Предварительные требования
-- Docker Desktop
-- Git
+- **Frontend**: Vue 3 + TypeScript + Vite, Tailwind-based UI, i18n (EN/RU), theme toggle.
+- **Backend**: Node.js + Express API (serverless on Vercel), contact form delivery via SMTP/SendGrid.
+- **Features**: projects showcase, contact form, PDF resume generation (EN/RU).
 
-### Запуск за 3 шага:
+## Vercel
 
-1. **Клонирование и настройка**
-```bash
-git clone <repository-url>
-cd CV
-cp packages/backend/env.example .env
-# Отредактируйте .env с вашими данными (опционально для демо)
-```
+- Static frontend is served from `packages/frontend/dist`.
+- API is available under `/api/*` and handled by the backend function.
 
-2. **Запуск Docker Desktop** (если не запущен)
-
-3. **Старт приложения**
-```bash
-docker compose up -d
-```
-
-🌐 **Готово!** Откройте http://localhost
-
-## 📦 Структура проекта
+## Project structure
 
 ```
-CV/
+CV-Portfolio/
+├── package.json
+├── vercel.json
+├── .env.example
+├── .gitignore
+├── docker-compose.yml
+├── docker-compose.prod.yml
 ├── packages/
-│   ├── frontend/          # Vue.js приложение
-│   │   └── Dockerfile     # Frontend контейнер
-│   └── backend/           # Node.js API сервер
-│       └── Dockerfile     # Backend контейнер
-├── scripts/               # Скрипты деплоя
-├── docker-compose.yml     # Локальная разработка
-└── docker-compose.prod.yml # Production с SSL
+│   ├── frontend/
+│   │   ├── public/
+│   │   │   ├── flags/          # locale flags (en, ru)
+│   │   │   └── fonts/          # Roboto for PDF (Cyrillic)
+│   │   ├── src/
+│   │   │   ├── assets/
+│   │   │   │   └── styles/
+│   │   │   ├── components/     # AppHeader, AppFooter, ProjectCard, etc.
+│   │   │   ├── locales/        # i18n (EN/RU)
+│   │   │   ├── router/
+│   │   │   ├── stores/         # Pinia (theme, language)
+│   │   │   ├── utils/          # api, resumeGenerator
+│   │   │   ├── views/          # Home, About, Projects, Contact
+│   │   │   ├── App.vue
+│   │   │   └── main.ts
+│   │   ├── index.html
+│   │   ├── vite.config.ts
+│   │   ├── tailwind.config.js
+│   │   ├── build-vercel.js
+│   │   └── Dockerfile
+│   └── backend/
+│       ├── src/
+│       │   ├── middleware/     # errorHandler, notFound
+│       │   ├── routes/         # contact, projects
+│       │   ├── services/       # emailService
+│       │   └── index.ts
+│       ├── env.example
+│       ├── tsconfig.json
+│       ├── nodemon.json
+│       └── Dockerfile
+└── scripts/
+    ├── deploy.sh
+    └── setup.sh
 ```
-
-## 🛠 Технологии
-
-### Frontend
-- Vue.js 3 + Composition API
-- Vite (сборщик)
-- TypeScript
-- Pinia (состояние)
-- Vue Router
-- Tailwind CSS
-- PDF генерация (jsPDF)
-
-### Backend
-- Node.js + Express
-- TypeScript
-- Email отправка (Nodemailer)
-- CORS + Helmet (безопасность)
-
-### DevOps
-- Docker + Docker Compose
-- Health checks
-
-## 🔧 Docker команды
-
-```bash
-# Локальная разработка
-docker compose up -d
-
-# Просмотр логов
-docker compose logs -f
-
-# Пересборка
-docker compose build --no-cache
-
-# Остановка
-docker compose down
-
-# Production
-docker compose -f docker-compose.prod.yml up -d
-```
-
-## 🌐 Доступ к сервисам
-
-**Локально:**
-- Frontend: http://localhost
-- Backend API: http://localhost:5001
-- Health Check: http://localhost:5001/api/health
-
-## 📧 Настройка Email
-
-Проект использует backend для отправки email через SMTP. **Для демо работает без настройки** (использует тестовый SMTP).
-
-### Для production настройки:
-
-1. **Получите App Password от Gmail:**
-   - Включите 2FA в Google аккаунте
-   - Создайте App Password в настройках безопасности
-
-2. **Настройте .env файл:**
-```bash
-SMTP_HOST=smtp.gmail.com
-SMTP_PORT=587
-SMTP_USER=your-email@gmail.com
-SMTP_PASS=your-app-password
-CONTACT_EMAIL=your-email@gmail.com
-```
-
-3. **Готово!** Форма контактов будет отправлять письма на указанный email.
-
-## 📚 API Reference
-
-### Health Check
-- `GET /api/health` - Статус сервера
-
-### Контакты  
-- `POST /api/contact` - Отправить сообщение
-  ```json
-  {
-    "name": "string",
-    "email": "string", 
-    "subject": "string",
-    "message": "string"
-  }
-  ```
-
-## 🎯 Особенности проекта
-
-- ✅ **Современный дизайн** - адаптивный интерфейс с темной/светлой темой
-- ✅ **Мультиязычность** - поддержка русского и английского языков
-- ✅ **PDF резюме** - генерация актуального резюме одним кликом
-- ✅ **Контактная форма** - отправка сообщений через SMTP
-- ✅ **Docker готов** - полная контейнеризация для легкого деплоя
-- ✅ **Безопасность** - все секреты через переменные окружения
-- ✅ **Готов к публикации** - никаких утечек данных, чистый код
-
-## 📄 Структура страниц
-
-- **Главная** (`/`) - Hero секция с основной информацией
-- **Обо мне** (`/about`) - Опыт, образование, навыки, скачивание резюме
-- **Проекты** (`/projects`) - Портфолио проектов с описанием
-- **Контакты** (`/contact`) - Контактная информация и форма связи
-
-## 📝 Лицензия
-
-MIT

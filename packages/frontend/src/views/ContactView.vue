@@ -10,7 +10,6 @@
         </p>
 
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
-          <!-- Контактная информация -->
           <div class="card">
             <h3 class="text-2xl font-bold text-gray-900 dark:text-white mb-6">
               {{ t("contact.info.title") }}
@@ -114,6 +113,8 @@
                     >
                     <a
                       href="https://www.linkedin.com/in/vladlen-milize-25b22339b/"
+                      target="_blank"
+                      rel="noopener noreferrer"
                       class="text-primary-600 dark:text-primary-400 hover:underline"
                       >LinkedIn</a
                     >
@@ -130,7 +131,6 @@
             </div>
           </div>
 
-          <!-- Контактная форма -->
           <div class="card">
             <h3 class="text-2xl font-bold text-gray-900 dark:text-white mb-6">
               {{ t("contact.title") }}
@@ -232,8 +232,6 @@ import { sendContactForm, type ContactFormData } from "@/utils/api";
 
 const { t } = useTranslations();
 
-// Remove EmailJS initialization - using backend API now
-
 const form = ref<ContactFormData>({
   name: "",
   email: "",
@@ -266,7 +264,6 @@ const submitForm = async () => {
         type: "success",
         message: t("contact.form.success"),
       };
-      // Reset form
       form.value = { name: "", email: "", subject: "", message: "" };
     } else {
       submitStatus.value = {
@@ -275,11 +272,9 @@ const submitForm = async () => {
       };
     }
   } catch (error) {
-    console.error("Form submission error:", error);
-    submitStatus.value = {
-      type: "error",
-      message: t("contact.form.error"),
-    };
+    const msg =
+      error instanceof Error ? error.message : t("contact.form.error");
+    submitStatus.value = { type: "error", message: msg };
   } finally {
     isSubmitting.value = false;
   }

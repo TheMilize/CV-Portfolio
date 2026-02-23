@@ -1,6 +1,5 @@
 <template>
   <div class="gears-container">
-    <!-- Main large gear -->
     <div class="gear gear-main">
       <div class="gear-inner">
         <div class="bar"></div>
@@ -12,7 +11,6 @@
       </div>
     </div>
 
-    <!-- Small gear on top -->
     <div class="gear gear-small gear-top">
       <div class="gear-inner">
         <div class="bar"></div>
@@ -21,7 +19,6 @@
       </div>
     </div>
 
-    <!-- Small gear on bottom -->
     <div class="gear gear-small gear-bottom">
       <div class="gear-inner">
         <div class="bar"></div>
@@ -33,7 +30,6 @@
 </template>
 
 <script setup lang="ts">
-// Компонент анимированных шестеренок
 </script>
 
 <style scoped>
@@ -174,7 +170,6 @@
   }
 }
 
-/* Dark mode adjustments */
 :global(.dark) .gear {
   background: linear-gradient(145deg, #374151, #1f2937);
   box-shadow:
@@ -190,7 +185,6 @@
   background: rgba(255, 255, 255, 0.8);
 }
 
-/* Hover effects */
 .gears-container:hover .gear-main .gear-inner {
   animation-duration: 2s;
 }

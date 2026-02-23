@@ -5,7 +5,6 @@
       aria-label="Toggle language"
       @click="isOpen = !isOpen"
     >
-      <!-- Language flag/icon -->
       <div class="w-5 h-5 rounded-full overflow-hidden">
         <img
           :src="currentLanguage === 'en' ? '/flags/en.svg' : '/flags/ru.svg'"
@@ -35,7 +34,6 @@
       </svg>
     </button>
 
-    <!-- Dropdown menu -->
     <div
       v-if="isOpen"
       class="absolute right-0 mt-2 w-48 bg-white dark:bg-gray-800 rounded-lg shadow-lg border border-gray-200 dark:border-gray-700 z-50"
@@ -114,7 +112,6 @@ const selectLanguage = (newLanguage: "en" | "ru") => {
 
 const handleImageError = (event: Event) => {
   const target = event.target as HTMLImageElement;
-  // Fallback to text if image fails to load
   target.style.display = "none";
   const parent = target.parentElement;
   if (parent) {
@@ -122,7 +119,6 @@ const handleImageError = (event: Event) => {
   }
 };
 
-// Close dropdown when clicking outside
 const handleClickOutside = (event: Event) => {
   const target = event.target as Element;
   if (!target.closest(".relative")) {
@@ -130,7 +126,6 @@ const handleClickOutside = (event: Event) => {
   }
 };
 
-// Add click outside listener
 onMounted(() => {
   document.addEventListener("click", handleClickOutside);
 });

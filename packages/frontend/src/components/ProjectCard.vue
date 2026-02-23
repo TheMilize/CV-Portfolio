@@ -1,10 +1,8 @@
 <template>
   <div class="group relative h-full">
-    <!-- Card container -->
     <div
       class="relative bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm rounded-2xl shadow-xl border border-white/20 dark:border-gray-700/50 overflow-hidden transition-all duration-500 hover:shadow-2xl hover:-translate-y-2 h-full flex flex-col"
     >
-      <!-- Demo message modal -->
       <div
         v-if="showDemoMessage"
         class="fixed inset-0 bg-black/50 flex items-center justify-center z-50"
@@ -33,7 +31,6 @@
         </div>
       </div>
 
-      <!-- GitHub message modal -->
       <div
         v-if="showGithubMessage"
         class="fixed inset-0 bg-black/50 flex items-center justify-center z-50"
@@ -58,11 +55,9 @@
         </div>
       </div>
 
-      <!-- Project image/placeholder -->
       <div
         class="relative h-48 bg-gradient-to-br from-primary-100 via-secondary-100 to-primary-50 dark:from-primary-900/20 dark:via-secondary-900/20 dark:to-primary-800/20 overflow-hidden"
       >
-        <!-- Project icon -->
         <div class="absolute inset-0 flex items-center justify-center">
           <div
             class="w-20 h-20 bg-gradient-to-br from-primary-500 to-primary-600 rounded-2xl flex items-center justify-center shadow-lg group-hover:shadow-xl transition-all duration-300 group-hover:scale-110"
@@ -83,7 +78,6 @@
           </div>
         </div>
 
-        <!-- Overlay with action buttons -->
         <div
           class="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center"
         >
@@ -126,7 +120,6 @@
         </div>
       </div>
 
-      <!-- Project content -->
       <div class="p-6 flex flex-col h-full">
         <h3
           class="text-xl font-bold text-gray-900 dark:text-white mb-3 group-hover:text-primary-600 dark:group-hover:text-primary-400 transition-colors duration-300"
@@ -138,7 +131,6 @@
           {{ t(project.descriptionKey) }}
         </p>
 
-        <!-- Technologies -->
         <div class="flex flex-wrap gap-2 mb-4">
           <span
             v-for="tech in project.technologies"
@@ -149,7 +141,6 @@
           </span>
         </div>
 
-        <!-- Project meta -->
         <div
           class="flex items-center justify-between text-sm text-gray-500 dark:text-gray-400 mt-auto"
         >

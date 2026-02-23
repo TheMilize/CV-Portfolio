@@ -4,7 +4,6 @@
   >
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <div class="flex justify-between items-center h-16">
-        <!-- Logo -->
         <router-link to="/" class="flex items-center space-x-3 group">
           <div
             class="w-10 h-10 bg-gradient-to-br from-primary-600 to-primary-700 rounded-xl flex items-center justify-center shadow-lg group-hover:shadow-xl transition-all duration-300 transform group-hover:scale-110"
@@ -17,7 +16,6 @@
           >
         </router-link>
 
-        <!-- Desktop Navigation -->
         <nav class="hidden md:flex items-center space-x-8">
           <router-link
             v-for="item in navigationItems"
@@ -30,15 +28,9 @@
           </router-link>
         </nav>
 
-        <!-- Controls -->
         <div class="flex items-center space-x-4">
-          <!-- Language Toggle -->
           <LanguageToggle />
-
-          <!-- Theme Toggle -->
           <ThemeToggle />
-
-          <!-- Mobile menu button -->
           <button
             class="md:hidden p-2 rounded-lg text-gray-600 hover:text-gray-900 hover:bg-gray-100 dark:text-gray-300 dark:hover:text-white dark:hover:bg-gray-700 transition-colors duration-200"
             aria-label="Toggle mobile menu"
@@ -69,7 +61,6 @@
         </div>
       </div>
 
-      <!-- Mobile Navigation -->
       <div
         v-if="isMobileMenuOpen"
         class="md:hidden border-t border-gray-200 dark:border-gray-700"

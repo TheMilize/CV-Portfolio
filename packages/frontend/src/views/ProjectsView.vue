@@ -9,7 +9,6 @@
           {{ t("projects.subtitle") }}
         </p>
 
-        <!-- Фильтры -->
         <div class="flex flex-wrap justify-center gap-4 mb-12">
           <button
             v-for="category in categories"
@@ -26,7 +25,6 @@
           </button>
         </div>
 
-        <!-- Проекты -->
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           <ProjectCard
             v-for="project in filteredProjects"
@@ -35,7 +33,6 @@
           />
         </div>
 
-        <!-- Пагинация -->
         <div v-if="totalPages > 1" class="flex justify-center mt-12">
           <div class="flex gap-2">
             <button
@@ -98,6 +95,17 @@ const categories = [
 const projects = [
   {
     id: 1,
+    title: "3D Model Viewer",
+    descriptionKey: "projects.descriptions.vue3dModelViewer",
+    technologies: ["Vue.js", "Three.js", "Vite", "Docker"],
+    demo: "https://github.com/TheMilize/vue-3d-model-viewer",
+    github: "https://github.com/TheMilize/vue-3d-model-viewer",
+    category: "frontend",
+    date: "2026",
+    type: "personal",
+  },
+  {
+    id: 2,
     title: "Office Space Frontend",
     descriptionKey: "projects.descriptions.officeSpaceFrontend",
     technologies: ["Vue.js", "TypeScript", "CSS3"],
@@ -108,7 +116,7 @@ const projects = [
     type: "personal",
   },
   {
-    id: 2,
+    id: 3,
     title: "Office Space Backend",
     descriptionKey: "projects.descriptions.officeSpaceBackend",
     technologies: ["Node.js", "TypeScript", "PostgreSQL"],
@@ -119,7 +127,7 @@ const projects = [
     type: "personal",
   },
   {
-    id: 3,
+    id: 4,
     title: "REST API Service",
     descriptionKey: "projects.descriptions.restApi",
     technologies: ["Node.js", "Express.js", "MongoDB", "JWT"],
@@ -130,7 +138,7 @@ const projects = [
     type: "commercial",
   },
   {
-    id: 4,
+    id: 5,
     title: "Weather Dashboard",
     descriptionKey: "projects.descriptions.weatherDashboard",
     technologies: ["Vue.js", "Chart.js", "OpenWeather API"],
@@ -141,7 +149,7 @@ const projects = [
     type: "personal",
   },
   {
-    id: 5,
+    id: 6,
     title: "Mobile App",
     descriptionKey: "projects.descriptions.mobileApp",
     technologies: ["React Native", "Node.js", "MongoDB"],
@@ -152,7 +160,7 @@ const projects = [
     type: "commercial",
   },
   {
-    id: 6,
+    id: 7,
     title: "Portfolio Website",
     descriptionKey: "projects.descriptions.portfolio",
     technologies: ["Vue.js", "CSS3", "Vite"],
@@ -163,7 +171,7 @@ const projects = [
     type: "personal",
   },
   {
-    id: 7,
+    id: 8,
     title: "DnD Character Generator",
     descriptionKey: "projects.descriptions.dnd",
     technologies: ["React.js", "JavaScript", "CSS3"],
@@ -174,7 +182,7 @@ const projects = [
     type: "personal",
   },
   {
-    id: 8,
+    id: 9,
     title: "Memory Game",
     descriptionKey: "projects.descriptions.memory",
     technologies: ["Vue.js", "JavaScript", "CSS3"],
@@ -185,7 +193,7 @@ const projects = [
     type: "personal",
   },
   {
-    id: 9,
+    id: 10,
     title: "Effective Mobile Frontend",
     descriptionKey: "projects.descriptions.effectiveFrontend",
     technologies: ["Vue.js", "TypeScript", "CSS3"],
@@ -196,7 +204,7 @@ const projects = [
     type: "commercial",
   },
   {
-    id: 10,
+    id: 11,
     title: "Effective Mobile Backend",
     descriptionKey: "projects.descriptions.effectiveBackend",
     technologies: ["Node.js", "TypeScript", "Express"],
@@ -207,7 +215,7 @@ const projects = [
     type: "commercial",
   },
   {
-    id: 11,
+    id: 12,
     title: "E-commerce Platform",
     descriptionKey: "projects.descriptions.ecommerce",
     technologies: ["Vue.js", "Node.js", "PostgreSQL", "Stripe"],
@@ -218,7 +226,7 @@ const projects = [
     type: "commercial",
   },
   {
-    id: 12,
+    id: 13,
     title: "Task Management App",
     descriptionKey: "projects.descriptions.taskManagement",
     technologies: ["Vue.js", "TypeScript", "Firebase", "CSS3"],

@@ -10,6 +10,18 @@ router.get('/', async (req: Request, res: Response): Promise<void> => {
     const projects = [
       {
         id: 1,
+        title: '3D Model Viewer',
+        description: 'Веб-приложение для просмотра 3D-моделей. Поддержка glTF/GLB, OBJ, PLY, drag-and-drop, управление камерой, смена фона, скриншоты.',
+        image: '/api/placeholder/400/300',
+        technologies: ['Vue.js', 'Three.js', 'Vite', 'Docker'],
+        demo: 'https://github.com/TheMilize/vue-3d-model-viewer',
+        github: 'https://github.com/TheMilize/vue-3d-model-viewer',
+        category: 'Frontend',
+        date: '2026',
+        type: 'Персональный'
+      },
+      {
+        id: 2,
         title: 'E-commerce Platform',
         description: 'Современная платформа электронной коммерции с полным функционалом корзины, оплаты и управления товарами.',
         image: '/api/placeholder/400/300',
@@ -21,7 +33,7 @@ router.get('/', async (req: Request, res: Response): Promise<void> => {
         type: 'Коммерческий'
       },
       {
-        id: 2,
+        id: 3,
         title: 'Task Management App',
         description: 'Приложение для управления задачами с drag-and-drop функциональностью и командной работой.',
         image: '/api/placeholder/400/300',

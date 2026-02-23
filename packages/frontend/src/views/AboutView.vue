@@ -6,7 +6,6 @@
       <div class="about-container">
         <h1 class="about-title">{{ t("about.title") }}</h1>
 
-        <!-- Основная информация -->
         <div class="about-card">
           <div class="profile-wrapper">
             <div class="profile-image-wrapper">
@@ -37,7 +36,6 @@
           </div>
         </div>
 
-        <!-- Проекты и практика -->
         <div class="about-card">
           <h3 class="card-title">
             {{ t("about.practice.title") }}
@@ -75,7 +73,6 @@
           </div>
         </div>
 
-        <!-- Образование -->
         <div class="about-card">
           <h3 class="card-title">
             {{ t("about.education.title") }}
@@ -101,7 +98,6 @@
           </div>
         </div>
 
-        <!-- Интересы -->
         <div class="about-card">
           <h3 class="card-title">
             {{ t("about.interests.title") }}
@@ -155,8 +151,8 @@ import "./AboutView.css";
 
 const { t, currentLanguage } = useTranslations();
 
-const downloadResume = () => {
-  generateResumePDF(currentLanguage.value);
+const downloadResume = async () => {
+  await generateResumePDF();
 };
 
 const practice = computed(() => [
