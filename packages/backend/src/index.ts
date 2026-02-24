@@ -10,17 +10,15 @@ import { notFound } from './middleware/notFound'
 import projectRoutes from './routes/projects'
 import contactRoutes from './routes/contact'
 
-const candidates = [
-  path.resolve(process.cwd(), '../../.env'),
-  path.resolve(process.cwd(), '.env'),
-  path.resolve(__dirname, '../../../.env'),
-]
-const envPath = candidates.find((p) => fs.existsSync(p))
-if (envPath) {
-  dotenv.config({ path: envPath })
-  // console.log('[env] loaded:', envPath)
-} else {
-  // console.warn('[env] .env not found. candidates:', candidates)
+// На Vercel переменные задаются в Project Settings → Environment Variables; .env не используется
+if (process.env.VERCEL !== '1') {
+  const candidates = [
+    path.resolve(process.cwd(), '../../.env'),
+    path.resolve(process.cwd(), '.env'),
+    path.resolve(__dirname, '../../../.env'),
+  ]
+  const envPath = candidates.find((p) => fs.existsSync(p))
+  if (envPath) dotenv.config({ path: envPath })
 }
 
 const PORT = process.env.PORT || 5001
@@ -51,10 +49,14 @@ app.use('/api/projects', projectRoutes)
 app.use('/api/contact', contactRoutes)
 
 app.get('/api/health', (_req, res) => {
+  const hasSendGrid = Boolean(process.env.SENDGRID_API_KEY?.trim())
+  const hasSmtp = Boolean(process.env.SMTP_USER?.trim() && process.env.SMTP_PASS?.trim())
   res.json({
     status: 'OK',
     timestamp: new Date().toISOString(),
     environment: process.env.NODE_ENV || 'development',
+    vercel: process.env.VERCEL === '1',
+    emailConfigured: hasSendGrid || hasSmtp,
   })
 })
 

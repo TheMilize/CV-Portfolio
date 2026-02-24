@@ -41,7 +41,23 @@ export const checkHealth = async (): Promise<boolean> => {
     const response = await api.get("/health");
     return response.status === 200;
   } catch (error) {
-    // console.error("Health check error:", error);
     return false;
+  }
+};
+
+export interface HealthResponse {
+  status: string;
+  timestamp: string;
+  environment: string;
+  vercel?: boolean;
+  emailConfigured?: boolean;
+}
+
+export const getHealthDetails = async (): Promise<HealthResponse | null> => {
+  try {
+    const response = await api.get<HealthResponse>("/health");
+    return response.data;
+  } catch {
+    return null;
   }
 };

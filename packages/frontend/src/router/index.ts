@@ -3,6 +3,7 @@ import HomeView from "@/views/HomeView.vue";
 import AboutView from "@/views/AboutView.vue";
 import ProjectsView from "@/views/ProjectsView.vue";
 import ContactView from "@/views/ContactView.vue";
+import HealthView from "@/views/HealthView.vue";
 
 const router = createRouter({
   history: createWebHistory(),
@@ -30,6 +31,12 @@ const router = createRouter({
       name: "contact",
       component: ContactView,
       meta: { title: "Контакты" },
+    },
+    {
+      path: "/health",
+      name: "health",
+      component: HealthView,
+      meta: { title: "Состояние API" },
     },
   ],
 });
