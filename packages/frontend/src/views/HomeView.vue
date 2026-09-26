@@ -1,258 +1,193 @@
 <template>
-  <div class="min-h-screen">
-    <AppHeader />
-
-    <section class="bg-gradient-hero py-32 relative overflow-hidden">
-      <div class="absolute inset-0 overflow-hidden">
-        <div
-          class="absolute -top-40 -right-40 w-80 h-80 bg-primary-300 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-pulse"
-        ></div>
-        <div
-          class="absolute -bottom-40 -left-40 w-80 h-80 bg-secondary-300 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-pulse"
-          style="animation-delay: 2s"
-        ></div>
-      </div>
-      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        <div class="text-center">
-          <h1
-            class="text-5xl md:text-7xl font-bold text-gray-900 dark:text-white mb-8 animate-fade-in"
-          >
-            {{ t("home.hero.title") }}
-          </h1>
-          <p
-            class="text-xl md:text-2xl text-gray-600 dark:text-gray-300 mb-12 max-w-4xl mx-auto animate-slide-up"
-            style="animation-delay: 0.2s"
-          >
-            {{ t("home.hero.subtitle") }}
-          </p>
-          <div
-            class="flex flex-col sm:flex-row gap-6 justify-center animate-scale-in"
-            style="animation-delay: 0.4s"
-          >
-            <router-link to="/projects" class="btn-primary text-lg px-8 py-4">
-              {{ t("home.hero.viewProjects") }}
-            </router-link>
-            <router-link to="/contact" class="btn-secondary text-lg px-8 py-4">
-              {{ t("home.hero.contactMe") }}
-            </router-link>
-          </div>
+  <div class="home-page">
+    <section class="hero shell">
+      <div class="hero-copy">
+        <p class="eyebrow">
+          <span class="status-dot"></span>{{ t("design.eyebrow") }}
+        </p>
+        <h1>
+          {{ t("design.heroFirst") }}<br /><span class="hero-accent">{{
+            t("design.heroSecond")
+          }}</span
+          ><br />{{ t("design.heroThird") }}<br /><span class="hero-serif">{{
+            t("design.heroFourth")
+          }}</span>
+        </h1>
+        <p class="hero-description">{{ t("design.intro") }}</p>
+        <div class="hero-actions">
+          <router-link to="/projects" class="btn-primary"
+            >{{ t("design.explore")
+            }}<UiIcon name="external" :size="18" /></router-link
+          ><router-link to="/about" class="text-link"
+            >{{ t("design.aboutLink") }}<UiIcon :size="17"
+          /></router-link>
+        </div>
+        <div class="hero-location">
+          <UiIcon name="pin" :size="15" />{{ t("design.based") }}
         </div>
       </div>
+      <div class="hero-visual" aria-hidden="true">
+        <div class="visual-topline">
+          <span>THE DEVELOPER’S WORKSPACE</span><span>01 — 03</span>
+        </div>
+        <div class="orbital orbital-one"></div>
+        <div class="orbital orbital-two"></div>
+        <div class="hero-star">✳</div>
+        <div class="code-window">
+          <div class="window-bar">
+            <div class="window-dots"><i></i><i></i><i></i></div>
+            <span>hello.ts</span><UiIcon name="code" :size="14" />
+          </div>
+          <div class="code-content">
+            <div>
+              <span class="line-no">01</span
+              ><span class="code-purple">const</span> developer = {
+            </div>
+            <div>
+              <span class="line-no">02</span>&nbsp; name:
+              <span class="code-green">'Vladlen'</span>,
+            </div>
+            <div>
+              <span class="line-no">03</span>&nbsp; focus:
+              <span class="code-green">'full-stack'</span>,
+            </div>
+            <div>
+              <span class="line-no">04</span>&nbsp; stack: [<span
+                class="code-green"
+                >'Vue', 'Node'</span
+              >],
+            </div>
+            <div>
+              <span class="line-no">05</span>&nbsp; mindset:
+              <span class="code-green">'always learning'</span>
+            </div>
+            <div><span class="line-no">06</span>};</div>
+            <div class="code-comment">
+              <span class="line-no">07</span>// from idea to interaction
+            </div>
+            <div>
+              <span class="line-no">08</span>developer.<span class="code-yellow"
+                >build</span
+              >(<span class="code-green">'something great'</span>);
+            </div>
+          </div>
+          <div class="code-status">
+            <span><span class="status-dot"></span>Ready to create</span
+            ><span>TypeScript</span>
+          </div>
+        </div>
+        <div class="floating-tag tag-vue">
+          <span class="vue-logo">V</span> Vue.js
+        </div>
+        <div class="floating-tag tag-ts">
+          <span class="ts-logo">TS</span> TypeScript
+        </div>
+        <span class="visual-bottomline">CODE · CURIOSITY · CRAFT</span
+        ><span class="visual-coordinate">{ vm }</span>
+      </div>
     </section>
-
-    <section class="py-32 bg-gradient-primary">
-      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <h2 class="section-title text-center">{{ t("home.skills.title") }}</h2>
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+    <div class="shell">
+      <div class="technology-strip">
+        <span class="mono-label">{{ t("design.stack") }}</span>
+        <div>
+          <span>Vue.js</span><i>✳</i><span>TypeScript</span><i>✳</i
+          ><span>Node.js</span><i>✳</i><span>PostgreSQL</span><i>✳</i
+          ><span>Docker</span>
+        </div>
+      </div>
+    </div>
+    <section id="selected-work" class="section shell">
+      <div class="section-heading">
+        <div>
+          <p class="eyebrow">{{ t("design.featuredLabel") }}</p>
+          <h2>{{ t("design.featuredTitle") }}</h2>
+          <p class="section-description">{{ t("design.featuredText") }}</p>
+        </div>
+        <router-link to="/projects" class="text-link"
+          >{{ t("design.allWork")
+          }}<span class="count-badge">{{ projects.length }}</span
+          ><UiIcon name="external" :size="18"
+        /></router-link>
+      </div>
+      <div class="project-grid">
+        <ProjectCard
+          v-for="project in featuredProjects"
+          :key="project.id"
+          :project="project"
+        />
+      </div>
+    </section>
+    <section class="toolkit-section">
+      <div class="shell toolkit-layout">
+        <div>
+          <p class="eyebrow">{{ t("design.skillsLabel") }}</p>
+          <h2 class="multiline">{{ t("design.skillsTitle") }}</h2>
+          <p class="section-description">{{ t("design.skillsIntro") }}</p>
+          <router-link class="text-link" to="/about"
+            >{{ t("nav.about") }}<UiIcon name="external" :size="18"
+          /></router-link>
+        </div>
+        <div class="skill-list">
           <div
-            v-for="(skill, index) in skills"
-            :key="skill.category"
-            class="card animate-fade-in"
-            :style="{ animationDelay: `${index * 0.1}s` }"
+            v-for="(skill, i) in skills"
+            :key="skill.title"
+            class="skill-row"
           >
-            <h3
-              class="text-xl font-semibold mb-4 text-primary-600 dark:text-primary-400"
-            >
-              {{ t(`home.skills.${skill.category.toLowerCase()}`) }}
-            </h3>
-            <div class="space-y-2">
-              <div
-                v-for="tech in skill.technologies"
-                :key="tech.name"
-                class="flex justify-between items-center"
-              >
-                <span class="text-gray-700 dark:text-gray-300">{{
-                  tech.name
+            <span class="skill-icon"
+              ><UiIcon :name="skill.icon" :size="22"
+            /></span>
+            <div>
+              <div class="skill-heading">
+                <h3>{{ t("home.skills." + skill.title) }}</h3>
+                <span>0{{ i + 1 }}</span>
+              </div>
+              <p>{{ t("design." + skill.title + "Desc") }}</p>
+              <div class="technology-tags">
+                <span v-for="tech in skill.technologies" :key="tech">{{
+                  tech
                 }}</span>
-                <div
-                  class="w-24 bg-gray-200 dark:bg-gray-700 rounded-full h-2 overflow-hidden"
-                >
-                  <div
-                    class="bg-gradient-to-r from-primary-600 to-primary-500 h-2 rounded-full transition-all duration-1000 ease-out"
-                    :style="{ width: tech.level + '%' }"
-                  ></div>
-                </div>
               </div>
             </div>
           </div>
         </div>
       </div>
     </section>
-
-    <section class="py-20 bg-gradient-primary">
-      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="grid grid-cols-2 md:grid-cols-4 gap-8">
-          <AnimatedCounter
-            :value="16"
-            :label="t('stats.projects')"
-            class="animate-fade-in"
-          />
-          <AnimatedCounter
-            :value="1"
-            :label="t('stats.experience')"
-            class="animate-fade-in"
-            :style="{ animationDelay: '0.1s' }"
-          />
-          <AnimatedCounter
-            :value="14"
-            :label="t('stats.clients')"
-            class="animate-fade-in"
-            :style="{ animationDelay: '0.2s' }"
-          />
-          <AnimatedCounter
-            :value="95"
-            :label="t('stats.satisfaction')"
-            class="animate-fade-in"
-            :style="{ animationDelay: '0.3s' }"
-          />
+    <section class="shell cta-section">
+      <div class="cta-panel">
+        <div>
+          <p class="eyebrow">{{ t("design.ctaLabel") }}</p>
+          <h2 class="multiline">{{ t("design.ctaTitle") }}</h2>
+          <p>{{ t("design.ctaText") }}</p>
+          <router-link to="/contact" class="btn-primary"
+            >{{ t("design.letsTalk") }}<UiIcon name="external" :size="18"
+          /></router-link>
         </div>
+        <span class="cta-asterisk" aria-hidden="true">✳</span>
       </div>
     </section>
-
-    <section
-      class="py-32 bg-gradient-to-br from-gray-50 via-white to-gray-100 dark:from-gray-800 dark:via-gray-900 dark:to-gray-950"
-    >
-      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <h2 class="section-title text-center">
-          {{ t("home.featuredProjects.title") }}
-        </h2>
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          <ProjectCard
-            v-for="(project, index) in featuredProjects"
-            :key="project.id"
-            :project="project"
-            class="animate-fade-in"
-            :style="{ animationDelay: `${index * 0.2}s` }"
-          />
-        </div>
-        <div class="text-center mt-8">
-          <router-link to="/projects" class="btn-primary">
-            {{ t("home.featuredProjects.viewAll") }}
-          </router-link>
-        </div>
-      </div>
-    </section>
-
-    <AppFooter />
   </div>
 </template>
-
 <script setup lang="ts">
-import AppHeader from "@/components/AppHeader.vue";
-import AppFooter from "@/components/AppFooter.vue";
 import ProjectCard from "@/components/ProjectCard.vue";
-import AnimatedCounter from "@/components/AnimatedCounter.vue";
+import UiIcon from "@/components/UiIcon.vue";
 import { useTranslations } from "@/locales";
-
+import { projects, featuredProjects } from "@/data/projects";
 const { t } = useTranslations();
-
 const skills = [
   {
-    category: "frontend",
-    technologies: [
-      { name: "Vue.js", level: 90 },
-      { name: "React", level: 85 },
-      { name: "TypeScript", level: 80 },
-      { name: "CSS3", level: 90 },
-    ],
+    title: "frontend",
+    icon: "code",
+    technologies: ["Vue.js", "React", "TypeScript", "CSS3"],
   },
   {
-    category: "backend",
-    technologies: [
-      { name: "Node.js", level: 85 },
-      { name: "Express.js", level: 80 },
-      { name: "PostgreSQL", level: 75 },
-      { name: "MongoDB", level: 70 },
-    ],
+    title: "backend",
+    icon: "server",
+    technologies: ["Node.js", "Express", "Telegram Bot API", "PostgreSQL"],
   },
   {
-    category: "tools",
-    technologies: [
-      { name: "Git", level: 90 },
-      { name: "Docker", level: 70 },
-      { name: "AWS", level: 65 },
-      { name: "CI/CD", level: 75 },
-    ],
-  },
-];
-
-const featuredProjects = [
-  {
-    id: 1,
-    title: "3D Model Viewer",
-    descriptionKey: "projects.descriptions.vue3dModelViewer",
-    technologies: ["Vue.js", "Three.js", "Vite", "Docker"],
-    demo: "https://github.com/TheMilize/vue-3d-model-viewer",
-    github: "https://github.com/TheMilize/vue-3d-model-viewer",
-    category: "frontend",
-    date: "2026",
-    type: "personal",
-  },
-  {
-    id: 2,
-    title: "Office Space Frontend",
-    descriptionKey: "projects.descriptions.officeSpaceFrontend",
-    technologies: ["Vue.js", "TypeScript", "CSS3"],
-    demo: "https://github.com/TheMilize/office_space_f",
-    github: "https://github.com/TheMilize/office_space_f",
-    category: "frontend",
-    date: "2025",
-    type: "personal",
-  },
-  {
-    id: 3,
-    title: "Office Space Backend",
-    descriptionKey: "projects.descriptions.officeSpaceBackend",
-    technologies: ["Node.js", "TypeScript", "PostgreSQL"],
-    demo: "https://github.com/TheMilize/office_space_b",
-    github: "https://github.com/TheMilize/office_space_b",
-    category: "backend",
-    date: "2025",
-    type: "personal",
-  },
-  {
-    id: 4,
-    title: "Task Management App",
-    descriptionKey: "projects.descriptions.taskManagement",
-    technologies: ["Vue.js", "TypeScript", "Firebase"],
-    demo: "#",
-    github: "#",
-    category: "frontend",
-    date: "2024",
-    type: "personal",
-  },
-  {
-    id: 5,
-    title: "DnD Character Generator",
-    descriptionKey: "projects.descriptions.dnd",
-    technologies: ["React.js", "JavaScript", "CSS3"],
-    demo: "https://github.com/TheMilize/dnd_randomizer",
-    github: "https://github.com/TheMilize/dnd_randomizer",
-    category: "frontend",
-    date: "2024",
-    type: "personal",
-  },
-  {
-    id: 6,
-    title: "Memory Game",
-    descriptionKey: "projects.descriptions.memory",
-    technologies: ["Vue.js", "JavaScript", "CSS3"],
-    demo: "https://github.com/TheMilize/memory_game",
-    github: "https://github.com/TheMilize/memory_game",
-    category: "frontend",
-    date: "2024",
-    type: "personal",
-  },
-  {
-    id: 7,
-    title: "Effective Mobile Frontend",
-    descriptionKey: "projects.descriptions.effectiveFrontend",
-    technologies: ["Vue.js", "TypeScript", "CSS3"],
-    demo: "https://github.com/TheMilize/effective_mobile_ts_f",
-    github: "https://github.com/TheMilize/effective_mobile_ts_f",
-    category: "frontend",
-    date: "2024",
-    type: "commercial",
+    title: "tools",
+    icon: "layers",
+    technologies: ["Git", "Docker", "AWS", "CI/CD"],
   },
 ];
 </script>

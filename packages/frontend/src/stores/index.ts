@@ -1,67 +1,69 @@
 import { defineStore } from "pinia";
-
 type ThemeMode = "light" | "dark" | "system";
 type LanguageCode = "en" | "ru";
-
-interface MainState {
-  theme: ThemeMode;
-  currentLanguage: LanguageCode;
+function readPreference(key: string): string | null {
+  try {
+    return localStorage.getItem(key);
+  } catch {
+    return null;
+  }
 }
-
-const THEME_KEY = "theme";
-const LANG_KEY = "lang";
-
+function savePreference(key: string, value: string) {
+  try {
+    localStorage.setItem(key, value);
+  } catch {
+    /* Preferences still work when storage is unavailable. */
+  }
+}
+let stopThemeListener: (() => void) | undefined;
 export const useMainStore = defineStore("main", {
-  state: (): MainState => ({
-    theme: "system",
-    currentLanguage: "en",
+  state: () => ({
+    theme: "system" as ThemeMode,
+    currentLanguage: "en" as LanguageCode,
+    systemDark: false,
   }),
   getters: {
-    isDark: (state): boolean => {
-      if (state.theme === "system") {
-        return typeof window !== "undefined"
-          ? window.matchMedia &&
-              window.matchMedia("(prefers-color-scheme: dark)").matches
-          : false;
-      }
-      return state.theme === "dark";
-    },
+    isDark: (state) =>
+      state.theme === "system" ? state.systemDark : state.theme === "dark",
   },
   actions: {
+    applyTheme() {
+      document.documentElement.classList.toggle("dark", this.isDark);
+    },
     setTheme(mode: ThemeMode) {
       this.theme = mode;
-      if (typeof document !== "undefined") {
-        const root = document.documentElement;
-        const dark = this.isDark;
-        root.classList.toggle("dark", dark);
-      }
-      if (typeof localStorage !== "undefined") {
-        localStorage.setItem(THEME_KEY, mode);
-      }
+      this.applyTheme();
+      savePreference("theme", mode);
     },
     initTheme() {
-      if (typeof localStorage !== "undefined") {
-        const saved = localStorage.getItem(THEME_KEY) as ThemeMode | null;
-        if (saved === "light" || saved === "dark" || saved === "system") {
-          this.theme = saved;
-        }
-      }
-      // apply
-      this.setTheme(this.theme);
+      const saved = readPreference("theme");
+      if (saved === "light" || saved === "dark" || saved === "system")
+        this.theme = saved;
+      const media = window.matchMedia("(prefers-color-scheme: dark)");
+      this.systemDark = media.matches;
+      stopThemeListener?.();
+      const update = (event: MediaQueryListEvent) => {
+        this.systemDark = event.matches;
+        this.applyTheme();
+      };
+      media.addEventListener("change", update);
+      stopThemeListener = () => media.removeEventListener("change", update);
+      this.applyTheme();
     },
     setLanguage(lang: LanguageCode) {
       this.currentLanguage = lang;
-      if (typeof localStorage !== "undefined") {
-        localStorage.setItem(LANG_KEY, lang);
-      }
+      document.documentElement.lang = lang;
+      savePreference("lang", lang);
     },
     initLanguage() {
-      if (typeof localStorage !== "undefined") {
-        const saved = localStorage.getItem(LANG_KEY) as LanguageCode | null;
-        if (saved === "en" || saved === "ru") {
-          this.currentLanguage = saved;
-        }
-      }
+      const saved = readPreference("lang");
+      this.setLanguage(
+        saved === "en" || saved === "ru"
+          ? saved
+          : navigator.language.startsWith("ru")
+            ? "ru"
+            : "en",
+      );
     },
   },
 });

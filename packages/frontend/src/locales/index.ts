@@ -1,6 +1,7 @@
 import { useMainStore } from "@/stores";
 
 export interface Translations {
+  design: Record<string, string>;
   nav: {
     home: string;
     about: string;
@@ -33,9 +34,11 @@ export interface Translations {
     description: string;
     practice: {
       title: string;
+      intro: string;
       fullstackProjects: string;
       frontendProjects: string;
-      personalProjects: string;
+      botsTitle: string;
+      botsDescription: string;
       fullstackDescription: string;
       frontendDescription: string;
     };
@@ -47,10 +50,9 @@ export interface Translations {
       gymnasiumName: string;
       robotics: string;
       roboticsName: string;
-      webDevelopment: string;
-      online: string;
-      selfStudy: string;
-      selfStudyName: string;
+      corporateInformationSystems: string;
+      mastersDegree: string;
+      bachelorsDegree: string;
       present: string;
     };
     interests: {
@@ -143,6 +145,98 @@ export interface Translations {
 
 export const translations: Record<string, Translations> = {
   en: {
+    design: {
+      skip: "Skip to content",
+      letsTalk: "Let’s talk",
+      menu: "Navigation menu",
+      theme: "Color theme",
+      light: "Light",
+      dark: "Dark",
+      system: "System",
+      language: "Language",
+      footerNote: "Thoughtful interfaces. Reliable code. Always curious.",
+      builtWith: "Built with",
+      madeWithCare: "Made with care",
+      backTop: "Back to top",
+      eyebrow: "FULL-STACK DEVELOPER",
+      heroFirst: "Ideas into",
+      heroSecond: "interfaces.",
+      heroThird: "Details into",
+      heroFourth: "experiences.",
+      intro:
+        "I’m Vladlen, a full-stack developer. I build thoughtful web applications and Telegram bots.",
+      hello: "Hi, I’m Vladlen",
+      based: "Based in Ekaterinburg, Russia",
+      explore: "Explore my work",
+      aboutLink: "A little about me",
+      scroll: "SCROLL TO EXPLORE",
+      featuredLabel: "01 / SELECTED WORK",
+      featuredTitle: "Built with purpose.",
+      featuredText: "A few projects where curiosity meets code.",
+      allWork: "All projects",
+      skillsLabel: "02 / MY TOOLKIT",
+      skillsTitle: "The right tools.\nThe whole picture.",
+      skillsIntro:
+        "From the first interaction to the last API call — I enjoy connecting every part of the experience.",
+      frontendDesc:
+        "Responsive interfaces with attention to every interaction.",
+      backendDesc:
+        "Server-side logic, APIs, and Telegram bots with Node.js and TypeScript.",
+      toolsDesc: "A thoughtful workflow, from development to deployment.",
+      ctaLabel: "HAVE SOMETHING IN MIND?",
+      ctaTitle: "Let’s build something\ngreat together.",
+      ctaText: "A project, an idea, or just a hello. My inbox is open.",
+      projectsLabel: "THE PROJECT ARCHIVE",
+      projectsHeading: "Ideas. Built",
+      search: "Search projects or technologies",
+      results: "Results",
+      noResults: "No projects found.",
+      noResultsText: "Try a different keyword or category.",
+      clear: "Reset filters",
+      source: "View code",
+      private: "Source unavailable",
+      illustration: "Concept illustration",
+      page: "Page",
+      aboutLabel: "THE PERSON BEHIND THE CODE",
+      aboutHeading: "Curious by nature.\nDeveloper by choice.",
+      aboutIntro: "I care about how things work — and how they feel.",
+      practiceLabel: "01 / DEVELOPMENT",
+      educationLabel: "02 / LEARNING",
+      interestsLabel: "03 / BEYOND THE EDITOR",
+      resumeLoading: "Preparing PDF…",
+      resumeError: "Could not create the PDF. Please try again.",
+      contactLabel: "LET’S CONNECT",
+      contactHeading: "Good things start\nwith a conversation.",
+      contactIntro:
+        "Have a project in mind or a question? Tell me a little about it.",
+      contactNote: "Prefer a direct message?",
+      formTitle: "Tell me about your idea",
+      namePlaceholder: "What should I call you?",
+      emailPlaceholder: "you@example.com",
+      subjectPlaceholder: "A project, an opportunity, a hello…",
+      messagePlaceholder: "What would you like to build?",
+      formNote: "Your details are only used to reply to your message.",
+      health: "Service status",
+      healthIntro: "Current API connectivity and email delivery configuration.",
+      loading: "Checking connection…",
+      status: "Status",
+      environment: "Environment",
+      emailConfigured: "Email configured",
+      yes: "Yes",
+      no: "No",
+      healthError: "The API is currently unavailable.",
+      retry: "Try again",
+      notFound: "This page took a different path.",
+      notFoundText:
+        "The page you are looking for doesn’t exist. Let’s get you back to the work.",
+      home: "Back to home",
+      ai: "AI & home lab",
+      available: "LET’S CREATE SOMETHING",
+      projectCount: "Projects in the collection",
+      stack: "Core technologies",
+      focus: "Frontend ↔ Backend",
+      focusLabel: "A full-stack perspective",
+    },
     nav: {
       home: "Home",
       about: "About",
@@ -174,29 +268,32 @@ export const translations: Record<string, Translations> = {
       downloadResume: "Download Resume",
       name: "Vladlen Milize",
       description:
-        "Passionate full-stack developer with 1+ year of non-commercial experience (personal and freelance projects) creating modern web applications. I specialize in Vue.js, Node.js and TypeScript. I love learning new technologies and creating quality products.",
+        "I build web applications and Telegram bots with Vue.js, Node.js, and TypeScript, from the interface to backend logic. I focus on usability, performance, and code quality.",
       practice: {
-        title: "Projects & Practice",
-        fullstackProjects: "Full-stack Developer",
-        frontendProjects: "Frontend Developer",
-        personalProjects: "Personal & Freelance Projects",
+        title: "What I can build for you",
+        intro:
+          "From a standalone interface to an application with its own backend. Here are the areas I work in.",
+        fullstackProjects: "Web applications",
+        frontendProjects: "Web interfaces",
+        botsTitle: "Telegram bots",
+        botsDescription:
+          "Bots with the commands and conversation flows your project needs. I build their server-side logic with Node.js and TypeScript.",
         fullstackDescription:
-          "Full-stack development of personal and freelance projects. Building modern web applications.",
+          "Applications with a connected interface, API, and database. I handle both the frontend and backend so they work together.",
         frontendDescription:
-          "Frontend development for personal and freelance projects. Creating user interfaces and web applications.",
+          "Responsive websites and application interfaces. I focus on clear navigation, useful interactions, and layouts that work on phones and desktops.",
       },
       education: {
         title: "Education",
         university: "Computer Science and Computer Engineering",
         universityName: "Ural State University of Economics",
-        gymnasium: "English Gymnasium (School)",
-        gymnasiumName: "School",
+        gymnasium: "English Gymnasium",
+        gymnasiumName: "General secondary education",
         robotics: "Robotics and Engineering",
-        roboticsName: "Specialized Educational Institution",
-        webDevelopment: "Web Development Courses",
-        online: "Online Platforms (Udemy, YouTube)",
-        selfStudy: "Documentation and Practice",
-        selfStudyName: "Practice with books and articles",
+        roboticsName: "Supplementary technical education",
+        corporateInformationSystems: "Corporate Information Systems",
+        mastersDegree: "Master’s degree",
+        bachelorsDegree: "Bachelor’s degree",
         present: "present",
       },
       interests: {
@@ -221,7 +318,7 @@ export const translations: Record<string, Translations> = {
     projects: {
       title: "My Projects",
       subtitle:
-        "A collection of my best work demonstrating skills and experience in development",
+        "Web applications, interfaces, and backend systems I’ve worked on.",
       all: "All",
       frontend: "Frontend",
       backend: "Backend",
@@ -304,6 +401,96 @@ export const translations: Record<string, Translations> = {
     },
   },
   ru: {
+    design: {
+      skip: "Перейти к содержимому",
+      letsTalk: "Обсудим идею",
+      menu: "Меню навигации",
+      theme: "Цветовая тема",
+      light: "Светлая",
+      dark: "Тёмная",
+      system: "Системная",
+      language: "Язык",
+      footerNote: "Продуманные интерфейсы. Надёжный код. Интерес к новому.",
+      builtWith: "Создано на",
+      madeWithCare: "С вниманием к деталям",
+      backTop: "Наверх",
+      eyebrow: "FULL-STACK РАЗРАБОТЧИК",
+      heroFirst: "Из идей —",
+      heroSecond: "интерфейсы.",
+      heroThird: "Из деталей —",
+      heroFourth: "впечатления.",
+      intro:
+        "Я Владлен, full-stack разработчик. Создаю продуманные веб-приложения и Telegram-ботов.",
+      hello: "Привет, я Владлен",
+      based: "Екатеринбург, Россия",
+      explore: "Смотреть проекты",
+      aboutLink: "Немного обо мне",
+      scroll: "ЛИСТАЙТЕ ДАЛЬШЕ",
+      featuredLabel: "01 / ИЗБРАННЫЕ РАБОТЫ",
+      featuredTitle: "Идеи, которые работают.",
+      featuredText: "Проекты, в которых любопытство встречается с кодом.",
+      allWork: "Все проекты",
+      skillsLabel: "02 / МОЙ ИНСТРУМЕНТАРИЙ",
+      skillsTitle: "От первой идеи\nдо последней детали.",
+      skillsIntro:
+        "От взаимодействия с интерфейсом до ответа сервера — мне нравится связывать всё в единый опыт.",
+      frontendDesc:
+        "Адаптивные интерфейсы с вниманием к каждому взаимодействию.",
+      backendDesc:
+        "Серверная логика, API и Telegram-боты на Node.js и TypeScript.",
+      toolsDesc: "Продуманный процесс — от разработки до развёртывания.",
+      ctaLabel: "ЕСТЬ ИДЕЯ?",
+      ctaTitle: "Давайте создадим\nчто-нибудь классное.",
+      ctaText: "Проект, предложение или просто привет — пишите.",
+      projectsLabel: "КОЛЛЕКЦИЯ ПРОЕКТОВ",
+      projectsHeading: "Идеи. В деле",
+      search: "Поиск по проектам и технологиям",
+      results: "Найдено",
+      noResults: "Проекты не найдены.",
+      noResultsText: "Попробуйте другое слово или категорию.",
+      clear: "Сбросить фильтры",
+      source: "Смотреть код",
+      private: "Код недоступен",
+      illustration: "Концептуальная иллюстрация",
+      page: "Страница",
+      aboutLabel: "ЧЕЛОВЕК ЗА КОДОМ",
+      aboutHeading: "Любопытство — характер.\nРазработка — призвание.",
+      aboutIntro: "Мне важно, как всё работает. И какие ощущения оставляет.",
+      practiceLabel: "01 / РАЗРАБОТКА",
+      educationLabel: "02 / ОБУЧЕНИЕ",
+      interestsLabel: "03 / ЗА ПРЕДЕЛАМИ КОДА",
+      resumeLoading: "Подготовка PDF…",
+      resumeError: "Не удалось создать PDF. Попробуйте ещё раз.",
+      contactLabel: "БУДЕМ НА СВЯЗИ",
+      contactHeading: "Всё хорошее\nначинается с разговора.",
+      contactIntro: "Есть идея проекта или вопрос? Расскажите немного о нём.",
+      contactNote: "Удобнее написать напрямую?",
+      formTitle: "Расскажите о своей идее",
+      namePlaceholder: "Как к вам обращаться?",
+      emailPlaceholder: "you@example.com",
+      subjectPlaceholder: "Проект, предложение, знакомство…",
+      messagePlaceholder: "Что вы хотели бы создать?",
+      formNote: "Ваши данные используются только для ответа на сообщение.",
+      health: "Состояние сервиса",
+      healthIntro: "Подключение к API и настройка отправки сообщений.",
+      loading: "Проверяю подключение…",
+      status: "Статус",
+      environment: "Окружение",
+      emailConfigured: "Почта настроена",
+      yes: "Да",
+      no: "Нет",
+      healthError: "Сейчас API недоступен.",
+      retry: "Повторить",
+      notFound: "Эта страница выбрала другой путь.",
+      notFoundText: "Такой страницы нет. Давайте вернёмся к проектам.",
+      home: "На главную",
+      ai: "ИИ и домашняя лаборатория",
+      available: "СОЗДАДИМ ЧТО-НИБУДЬ ВМЕСТЕ",
+      projectCount: "Проектов в коллекции",
+      stack: "Основные технологии",
+      focus: "Frontend ↔ Backend",
+      focusLabel: "Взгляд на весь продукт",
+    },
     nav: {
       home: "Главная",
       about: "Обо мне",
@@ -335,29 +522,32 @@ export const translations: Record<string, Translations> = {
       downloadResume: "Скачать резюме",
       name: "Владлен Милизе",
       description:
-        "Увлеченный full-stack разработчик с 1+ годом некоммерческого опыта (личные и фриланс проекты) создания современных веб-приложений. Специализируюсь на Vue.js, Node.js и TypeScript. Люблю изучать новые технологии и создавать качественные продукты.",
+        "Разрабатываю веб-приложения и Telegram-ботов на Vue.js, Node.js и TypeScript: от интерфейса до серверной логики. Уделяю внимание удобству, производительности и качеству кода.",
       practice: {
-        title: "Проекты и практика",
-        fullstackProjects: "Full-stack разработчик",
-        frontendProjects: "Frontend разработчик",
-        personalProjects: "Личные и фриланс проекты",
+        title: "Чем могу помочь",
+        intro:
+          "От отдельного интерфейса до приложения с собственной серверной частью. Вот основные направления моей работы.",
+        fullstackProjects: "Веб-приложения",
+        frontendProjects: "Интерфейсы сайтов",
+        botsTitle: "Telegram-боты",
+        botsDescription:
+          "Боты с командами и сценариями общения под задачи вашего проекта. Разрабатываю серверную логику на Node.js и TypeScript.",
         fullstackDescription:
-          "Full-stack разработка личных и фриланс проектов. Создание современных веб-приложений.",
+          "Приложения, в которых интерфейс, API и база данных работают вместе. Беру на себя клиентскую и серверную части проекта.",
         frontendDescription:
-          "Frontend разработка личных и фриланс проектов. Создание пользовательских интерфейсов и веб-приложений.",
+          "Адаптивные сайты и интерфейсы приложений. Продумываю навигацию, взаимодействие с элементами и отображение на телефонах и компьютерах.",
       },
       education: {
         title: "Образование",
         university: "Информатика и вычислительная техника",
         universityName: "Уральский государственный экономический университет",
-        gymnasium: "Английская гимназия (Школа)",
-        gymnasiumName: "Школа",
+        gymnasium: "Английская гимназия",
+        gymnasiumName: "Среднее общее образование",
         robotics: "Робототехника и инженерия",
-        roboticsName: "Специализированное учебное заведение",
-        webDevelopment: "Курсы по веб-разработке",
-        online: "Онлайн платформы (Udemy, YouTube)",
-        selfStudy: "Самообучение и практика",
-        selfStudyName: "Практика по книгам и статьям",
+        roboticsName: "Дополнительное техническое образование",
+        corporateInformationSystems: "Корпоративные информационные системы",
+        mastersDegree: "Магистратура",
+        bachelorsDegree: "Бакалавриат",
         present: "настоящее время",
       },
       interests: {
@@ -382,7 +572,7 @@ export const translations: Record<string, Translations> = {
     projects: {
       title: "Мои проекты",
       subtitle:
-        "Коллекция моих лучших работ, демонстрирующих навыки и опыт в разработке",
+        "Веб-приложения, интерфейсы и серверные решения, над которыми я работал.",
       all: "Все",
       frontend: "Frontend",
       backend: "Backend",
@@ -469,7 +659,7 @@ export const translations: Record<string, Translations> = {
   },
 };
 
-import { computed, watch } from "vue";
+import { computed } from "vue";
 
 export const useTranslations = () => {
   const store = useMainStore();

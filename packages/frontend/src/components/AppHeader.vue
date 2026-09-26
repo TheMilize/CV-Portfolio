@@ -1,105 +1,78 @@
 <template>
-  <header
-    class="bg-white/80 dark:bg-gray-900/80 backdrop-blur-md shadow-lg border-b border-gray-200/50 dark:border-gray-700/50 sticky top-0 z-40"
-  >
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div class="flex justify-between items-center h-16">
-        <router-link to="/" class="flex items-center space-x-3 group">
-          <div
-            class="w-10 h-10 bg-gradient-to-br from-primary-600 to-primary-700 rounded-xl flex items-center justify-center shadow-lg group-hover:shadow-xl transition-all duration-300 transform group-hover:scale-110"
-          >
-            <AnimatedGears />
-          </div>
-          <span
-            class="text-2xl font-bold bg-gradient-to-r from-gray-900 to-gray-600 dark:from-white dark:to-gray-300 bg-clip-text text-transparent"
-            >Portfolio</span
-          >
-        </router-link>
-
-        <nav class="hidden md:flex items-center space-x-8">
-          <router-link
-            v-for="item in navigationItems"
-            :key="item.path"
-            :to="item.path"
-            class="nav-link"
-            :class="{ 'nav-link-active': $route.path === item.path }"
-          >
-            {{ t(item.translationKey) }}
-          </router-link>
-        </nav>
-
-        <div class="flex items-center space-x-4">
-          <LanguageToggle />
-          <ThemeToggle />
-          <button
-            class="md:hidden p-2 rounded-lg text-gray-600 hover:text-gray-900 hover:bg-gray-100 dark:text-gray-300 dark:hover:text-white dark:hover:bg-gray-700 transition-colors duration-200"
-            aria-label="Toggle mobile menu"
-            @click="isMobileMenuOpen = !isMobileMenuOpen"
-          >
-            <svg
-              class="w-6 h-6"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-            >
-              <path
-                v-if="!isMobileMenuOpen"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2"
-                d="M4 6h16M4 12h16M4 18h16"
-              />
-              <path
-                v-else
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2"
-                d="M6 18L18 6M6 6l12 12"
-              />
-            </svg>
-          </button>
-        </div>
-      </div>
-
-      <div
-        v-if="isMobileMenuOpen"
-        class="md:hidden border-t border-gray-200 dark:border-gray-700"
+  <header class="site-header" @keydown.esc="isMobileMenuOpen = false">
+    <div class="shell header-inner">
+      <router-link
+        to="/"
+        class="brand"
+        :aria-label="t('about.name') + ' — ' + t('nav.home')"
       >
-        <nav class="py-4 space-y-2">
-          <router-link
-            v-for="item in navigationItems"
-            :key="item.path"
-            :to="item.path"
-            class="block px-4 py-2 text-base font-medium rounded-lg transition-colors duration-200"
-            :class="
-              $route.path === item.path
-                ? 'bg-primary-50 text-primary-600 dark:bg-primary-900/20 dark:text-primary-400'
-                : 'text-gray-600 hover:text-gray-900 hover:bg-gray-50 dark:text-gray-300 dark:hover:text-white dark:hover:bg-gray-800'
-            "
-            @click="isMobileMenuOpen = false"
-          >
-            {{ t(item.translationKey) }}
-          </router-link>
-        </nav>
+        <span class="brand-mark">v<span>.</span>m</span>
+        <span class="brand-name"
+          >Vladlen Milize<span>DEVELOPER & MAKER</span></span
+        >
+      </router-link>
+      <nav class="desktop-nav" :aria-label="t('common.navigation')">
+        <router-link
+          v-for="item in navigationItems"
+          :key="item.path"
+          :to="item.path"
+          :class="{ active: route.path === item.path }"
+          >{{ t(item.key) }}</router-link
+        >
+      </nav>
+      <div class="header-tools">
+        <LanguageToggle /><span class="tool-divider"></span><ThemeToggle />
+        <router-link class="header-contact" to="/contact"
+          >{{ t("design.letsTalk") }}<UiIcon name="external" :size="16"
+        /></router-link>
+        <button
+          class="icon-button menu-button"
+          :aria-label="t('design.menu')"
+          :aria-expanded="isMobileMenuOpen"
+          aria-controls="mobile-nav"
+          @click="isMobileMenuOpen = !isMobileMenuOpen"
+        >
+          <UiIcon :name="isMobileMenuOpen ? 'close' : 'menu'" />
+        </button>
       </div>
     </div>
+    <nav
+      v-if="isMobileMenuOpen"
+      id="mobile-nav"
+      class="mobile-nav shell"
+      :aria-label="t('common.navigation')"
+    >
+      <router-link
+        v-for="item in navigationItems"
+        :key="item.path"
+        :to="item.path"
+        :class="{ active: route.path === item.path }"
+        @click="isMobileMenuOpen = false"
+        >{{ t(item.key) }}<UiIcon name="external" :size="18"
+      /></router-link>
+    </nav>
   </header>
 </template>
-
 <script setup lang="ts">
-import { ref } from "vue";
+import { ref, watch } from "vue";
+import { useRoute } from "vue-router";
 import { useTranslations } from "@/locales";
 import LanguageToggle from "./LanguageToggle.vue";
 import ThemeToggle from "./ThemeToggle.vue";
-import AnimatedGears from "./AnimatedGears.vue";
-
+import UiIcon from "./UiIcon.vue";
+const route = useRoute();
 const { t } = useTranslations();
 const isMobileMenuOpen = ref(false);
-
+watch(
+  () => route.path,
+  () => {
+    isMobileMenuOpen.value = false;
+  },
+);
 const navigationItems = [
-  { path: "/", translationKey: "nav.home" },
-  { path: "/about", translationKey: "nav.about" },
-  { path: "/projects", translationKey: "nav.projects" },
-  { path: "/contact", translationKey: "nav.contact" },
+  { path: "/", key: "nav.home" },
+  { path: "/about", key: "nav.about" },
+  { path: "/projects", key: "nav.projects" },
+  { path: "/contact", key: "nav.contact" },
 ];
 </script>

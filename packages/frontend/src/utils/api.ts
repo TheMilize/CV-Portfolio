@@ -56,7 +56,12 @@ export interface HealthResponse {
 export const getHealthDetails = async (): Promise<HealthResponse | null> => {
   try {
     const response = await api.get<HealthResponse>("/health");
-    return response.data;
+    return response.data &&
+      typeof response.data === "object" &&
+      typeof response.data.status === "string" &&
+      typeof response.data.timestamp === "string"
+      ? response.data
+      : null;
   } catch {
     return null;
   }

@@ -1,174 +1,170 @@
 <template>
-  <div class="about-page">
-    <AppHeader />
-
-    <section class="about-section">
-      <div class="about-container">
-        <h1 class="about-title">{{ t("about.title") }}</h1>
-
-        <div class="about-card">
-          <div class="profile-wrapper">
-            <div class="profile-image-wrapper">
-              <div class="profile-image-container">
-                <img
-                  src="@/assets/images/Photo.png"
-                  alt="Profile Photo"
-                  class="profile-image"
-                />
-              </div>
-            </div>
-            <div class="profile-info">
-              <h2 class="profile-name">
-                {{ t("about.name") }}
-              </h2>
-              <p class="profile-description">
-                {{ t("about.description") }}
-              </p>
-              <div class="profile-actions">
-                <router-link to="/contact" class="btn-primary">
-                  {{ t("common.writeEmail") }}
-                </router-link>
-                <button class="btn-secondary" @click="downloadResume">
-                  {{ t("common.downloadResume") }}
-                </button>
-              </div>
-            </div>
-          </div>
+  <div class="shell page-section about-page">
+    <header class="page-heading">
+      <p class="eyebrow">{{ t("design.aboutLabel") }}</p>
+      <h1>{{ t("design.aboutHeading") }}</h1>
+      <p>{{ t("design.aboutIntro") }}</p>
+    </header>
+    <section class="profile-panel">
+      <div class="profile-image-wrapper">
+        <img
+          src="@/assets/images/profile-portrait-retouched.png"
+          :alt="t('about.name')"
+          class="profile-image"
+          width="1122"
+          height="1402"
+        /><span class="photo-caption"
+          >VLADLEN MILIZE / {{ t("design.eyebrow") }}</span
+        >
+      </div>
+      <div class="profile-info">
+        <p class="eyebrow">
+          <span class="status-dot"></span>{{ t("design.hello") }}
+        </p>
+        <h2>{{ t("about.name") }}<span class="heading-dot">.</span></h2>
+        <p class="profile-description">{{ t("about.description") }}</p>
+        <div class="profile-location">
+          <UiIcon name="pin" :size="17" />{{ t("common.location") }}
         </div>
-
-        <div class="about-card">
-          <h3 class="card-title">
-            {{ t("about.practice.title") }}
-          </h3>
-          <div class="practice-list">
-            <div
-              v-for="item in practice"
-              :key="item.id"
-              class="practice-item"
-            >
-              <div class="practice-header">
-                <h4 class="practice-position">
-                  {{ item.position }}
-                </h4>
-                <span class="practice-period">{{
-                  item.period
-                }}</span>
-              </div>
-              <p class="practice-company">
-                {{ item.company }}
-              </p>
-              <p class="practice-description">
-                {{ item.description }}
-              </p>
-              <div class="practice-technologies">
-                <span
-                  v-for="tech in item.technologies"
-                  :key="tech"
-                  class="tech-tag"
-                >
-                  {{ tech }}
-                </span>
-              </div>
-            </div>
-          </div>
+        <div class="profile-actions">
+          <router-link to="/contact" class="btn-primary"
+            >{{ t("design.letsTalk")
+            }}<UiIcon name="external" :size="17" /></router-link
+          ><button
+            class="btn-secondary"
+            :disabled="downloading"
+            :aria-busy="downloading"
+            @click="downloadResume"
+          >
+            {{
+              downloading
+                ? t("design.resumeLoading")
+                : t("common.downloadResume")
+            }}<UiIcon name="download" :size="17" />
+          </button>
         </div>
-
-        <div class="about-card">
-          <h3 class="card-title">
-            {{ t("about.education.title") }}
-          </h3>
-          <div class="education-list">
-            <div
-              v-for="edu in education"
-              :key="edu.id"
-              class="education-item"
-            >
-              <div class="education-header">
-                <h4 class="education-degree">
-                  {{ edu.degree }}
-                </h4>
-                <span class="education-period">{{
-                  edu.period
-                }}</span>
-              </div>
-              <p class="education-institution">
-                {{ edu.institution }}
-              </p>
+        <p v-if="resumeError" role="alert" class="resume-error">
+          {{ t("design.resumeError") }}
+        </p>
+      </div>
+    </section>
+    <section class="about-detail-section about-services-section">
+      <div class="about-section-heading">
+        <p class="eyebrow">{{ t("design.practiceLabel") }}</p>
+        <h2>{{ t("about.practice.title") }}</h2>
+        <p class="section-description">{{ t("about.practice.intro") }}</p>
+        <router-link to="/projects" class="text-link">
+          {{ t("home.hero.viewProjects") }}<UiIcon name="external" :size="18" />
+        </router-link>
+      </div>
+      <div class="skill-list">
+        <article v-for="item in services" :key="item.id" class="skill-row">
+          <span class="skill-icon"
+            ><UiIcon :name="item.icon" :size="22"
+          /></span>
+          <div>
+            <div class="skill-heading">
+              <h3>{{ item.title }}</h3>
+              <span>0{{ item.id }}</span>
+            </div>
+            <p>{{ item.description }}</p>
+            <div class="technology-tags">
+              <span v-for="tech in item.technologies" :key="tech">{{
+                tech
+              }}</span>
             </div>
           </div>
-        </div>
-
-        <div class="about-card">
-          <h3 class="card-title">
-            {{ t("about.interests.title") }}
-          </h3>
-          <div class="interests-grid">
-            <div
-              v-for="interest in interests"
-              :key="interest.id"
-              class="interest-item"
-            >
-              <div class="interest-icon">
-                <svg
-                  class="interest-svg"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="2"
-                    d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"
-                  />
-                </svg>
-              </div>
-              <div class="interest-content">
-                <h4 class="interest-title">
-                  {{ interest.title }}
-                </h4>
-                <p class="interest-description">
-                  {{ interest.description }}
-                </p>
-              </div>
+        </article>
+      </div>
+    </section>
+    <section class="about-detail-section">
+      <div class="about-section-heading">
+        <p class="eyebrow">{{ t("design.educationLabel") }}</p>
+        <h2>{{ t("about.education.title") }}</h2>
+      </div>
+      <div class="education-content">
+        <div class="timeline">
+          <article v-for="edu in education" :key="edu.id" class="timeline-item">
+            <div class="education-meta">
+              <span class="education-level">{{ edu.level }}</span>
+              <span class="timeline-period">{{ edu.period }}</span>
             </div>
-          </div>
+            <h3>{{ edu.degree }}</h3>
+            <p v-if="edu.institution" class="timeline-description">
+              {{ edu.institution }}
+            </p>
+          </article>
         </div>
       </div>
     </section>
-
-    <AppFooter />
+    <section class="interests-section">
+      <div class="about-section-heading">
+        <p class="eyebrow">{{ t("design.interestsLabel") }}</p>
+        <h2>{{ t("about.interests.title") }}</h2>
+      </div>
+      <div class="interests-grid">
+        <article
+          v-for="(interest, i) in interests"
+          :key="interest.id"
+          class="interest-card"
+        >
+          <div>
+            <span class="interest-number">0{{ i + 1 }}</span
+            ><UiIcon
+              :name="['code', 'layers', 'server', 'globe', 'search'][i]"
+              :size="22"
+            />
+          </div>
+          <h3>{{ interest.title }}</h3>
+          <p>{{ interest.description }}</p>
+        </article>
+      </div>
+    </section>
   </div>
 </template>
-
 <script setup lang="ts">
-import AppHeader from "@/components/AppHeader.vue";
-import AppFooter from "@/components/AppFooter.vue";
-import { computed } from "vue";
+import { computed, ref } from "vue";
 import { useTranslations } from "@/locales";
-import { generateResumePDF } from "@/utils/resumeGenerator";
+import UiIcon from "@/components/UiIcon.vue";
 import "./AboutView.css";
 
-const { t, currentLanguage } = useTranslations();
+const { t } = useTranslations();
 
+const downloading = ref(false);
+const resumeError = ref(false);
 const downloadResume = async () => {
-  await generateResumePDF();
+  if (downloading.value) return;
+  downloading.value = true;
+  resumeError.value = false;
+  try {
+    const { generateResumePDF } = await import("@/utils/resumeGenerator");
+    await generateResumePDF();
+  } catch {
+    resumeError.value = true;
+  } finally {
+    downloading.value = false;
+  }
 };
 
-const practice = computed(() => [
+const services = computed(() => [
   {
     id: 1,
-    position: t("about.practice.fullstackProjects"),
-    company: t("about.practice.personalProjects"),
-    period: `2023 - ${t("about.education.present")}`,
+    title: t("about.practice.fullstackProjects"),
+    icon: "layers",
     description: t("about.practice.fullstackDescription"),
-    technologies: ["Vue.js", "Node.js", "TypeScript", "CSS3"],
+    technologies: ["Vue.js", "Node.js", "PostgreSQL"],
   },
   {
     id: 2,
-    position: t("about.practice.frontendProjects"),
-    company: t("about.practice.personalProjects"),
-    period: `2023 - ${t("about.education.present")}`,
+    title: t("about.practice.botsTitle"),
+    icon: "chat",
+    description: t("about.practice.botsDescription"),
+    technologies: ["Node.js", "TypeScript", "Telegram Bot API"],
+  },
+  {
+    id: 3,
+    title: t("about.practice.frontendProjects"),
+    icon: "code",
     description: t("about.practice.frontendDescription"),
     technologies: ["Vue.js", "JavaScript", "CSS", "HTML"],
   },
@@ -176,34 +172,32 @@ const practice = computed(() => [
 
 const education = computed(() => [
   {
+    id: 4,
+    degree: t("about.education.corporateInformationSystems"),
+    level: t("about.education.mastersDegree"),
+    institution: t("about.education.universityName"),
+    period: "2025 - 2028",
+  },
+  {
     id: 1,
     degree: t("about.education.university"),
+    level: t("about.education.bachelorsDegree"),
     institution: t("about.education.universityName"),
     period: "2021 - 2025",
   },
   {
     id: 2,
     degree: t("about.education.gymnasium"),
-    institution: t("about.education.gymnasiumName"),
+    level: t("about.education.gymnasiumName"),
+    institution: "",
     period: "2010 - 2021",
   },
   {
     id: 3,
     degree: t("about.education.robotics"),
-    institution: t("about.education.roboticsName"),
+    level: t("about.education.roboticsName"),
+    institution: "",
     period: "2018 - 2020",
-  },
-  {
-    id: 4,
-    degree: t("about.education.webDevelopment"),
-    institution: t("about.education.online"),
-    period: "2022 - 2023",
-  },
-  {
-    id: 5,
-    degree: t("about.education.selfStudy"),
-    institution: t("about.education.selfStudyName"),
-    period: `2022 - ${t("about.education.present")}`,
   },
 ]);
 
@@ -220,7 +214,7 @@ const interests = computed(() => [
   },
   {
     id: 3,
-    title: t("about.interests.ai").split(" ").slice(0, 2).join(" "),
+    title: t("design.ai"),
     description: t("about.interests.ai"),
   },
   {

@@ -1,49 +1,80 @@
 <template>
-  <div class="min-h-screen">
-    <AppHeader />
-    <section class="py-20">
-      <div class="max-w-2xl mx-auto px-4 sm:px-6 lg:px-8">
-        <h1 class="section-title text-center">Состояние API</h1>
-        <p class="section-subtitle text-center">
-          Проверка бэкенда и переменных окружения (почта)
-        </p>
-        <div class="card">
-          <div v-if="loading" class="text-center py-8 text-gray-500 dark:text-gray-400">
-            Загрузка…
-          </div>
-          <div v-else-if="health" class="space-y-4">
-            <p><strong>Статус:</strong> <span class="text-green-600 dark:text-green-400">{{ health.status }}</span></p>
-            <p><strong>Окружение:</strong> {{ health.environment }}</p>
-            <p><strong>Vercel:</strong> {{ health.vercel ? 'да' : 'нет' }}</p>
-            <p>
-              <strong>Почта настроена:</strong>
-              <span :class="health.emailConfigured ? 'text-green-600 dark:text-green-400' : 'text-amber-600 dark:text-amber-400'">
-                {{ health.emailConfigured ? 'да' : 'нет — задайте SMTP_* или SENDGRID_API_KEY в Vercel' }}
-              </span>
-            </p>
-            <p class="text-sm text-gray-500 dark:text-gray-400">{{ health.timestamp }}</p>
-          </div>
-          <div v-else class="text-center py-8 text-amber-600 dark:text-amber-400">
-            Не удалось получить ответ от /api/health
-          </div>
+  <div class="shell page-section">
+    <header class="page-heading">
+      <p class="eyebrow">SYSTEM / STATUS</p>
+      <h1>{{ t("design.health") }}</h1>
+      <p>{{ t("design.healthIntro") }}</p>
+    </header>
+    <div class="card health-card" aria-live="polite">
+      <p v-if="loading">{{ t("design.loading") }}</p>
+      <dl v-else-if="health">
+        <div>
+          <dt>{{ t("design.status") }}</dt>
+          <dd>{{ health.status }}</dd>
         </div>
-      </div>
-    </section>
-    <AppFooter />
+        <div>
+          <dt>{{ t("design.environment") }}</dt>
+          <dd>{{ health.environment }}</dd>
+        </div>
+        <div>
+          <dt>Vercel</dt>
+          <dd>{{ t(health.vercel ? "design.yes" : "design.no") }}</dd>
+        </div>
+        <div>
+          <dt>{{ t("design.emailConfigured") }}</dt>
+          <dd>{{ t(health.emailConfigured ? "design.yes" : "design.no") }}</dd>
+        </div>
+        <div>
+          <dt>UTC</dt>
+          <dd>{{ health.timestamp }}</dd>
+        </div>
+      </dl>
+      <p v-else>{{ t("design.healthError") }}</p>
+      <button class="btn-secondary" :disabled="loading" @click="refresh">
+        {{ t("design.retry") }}
+      </button>
+    </div>
   </div>
 </template>
-
 <script setup lang="ts">
 import { ref, onMounted } from "vue";
-import AppHeader from "@/components/AppHeader.vue";
-import AppFooter from "@/components/AppFooter.vue";
 import { getHealthDetails, type HealthResponse } from "@/utils/api";
-
+import { useTranslations } from "@/locales";
+const { t } = useTranslations();
 const loading = ref(true);
 const health = ref<HealthResponse | null>(null);
-
-onMounted(async () => {
-  health.value = await getHealthDetails();
-  loading.value = false;
-});
+async function refresh() {
+  loading.value = true;
+  try {
+    health.value = await getHealthDetails();
+  } finally {
+    loading.value = false;
+  }
+}
+onMounted(refresh);
 </script>
+<style scoped>
+.health-card {
+  max-width: 650px;
+}
+.health-card dl {
+  display: grid;
+  gap: 20px;
+}
+.health-card dl > div {
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+  flex-wrap: wrap;
+  font-size: 13px;
+}
+.health-card dt {
+  color: var(--muted);
+}
+.health-card dd {
+  overflow-wrap: anywhere;
+}
+.health-card .btn-secondary {
+  margin-top: 30px;
+}
+</style>
