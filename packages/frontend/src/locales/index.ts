@@ -42,6 +42,12 @@ export interface Translations {
       fullstackDescription: string;
       frontendDescription: string;
     };
+    employment: {
+      title: string;
+      oneYear: string;
+      kontur: string;
+      ric: string;
+    };
     education: {
       title: string;
       university: string;
@@ -201,8 +207,9 @@ export const translations: Record<string, Translations> = {
       aboutHeading: "Curious by nature.\nDeveloper by choice.",
       aboutIntro: "I care about how things work — and how they feel.",
       practiceLabel: "01 / DEVELOPMENT",
-      educationLabel: "02 / LEARNING",
-      interestsLabel: "03 / BEYOND THE EDITOR",
+      employmentLabel: "02 / EXPERIENCE",
+      educationLabel: "03 / LEARNING",
+      interestsLabel: "04 / BEYOND THE EDITOR",
       resumeLoading: "Preparing PDF…",
       resumeError: "Could not create the PDF. Please try again.",
       contactLabel: "LET’S CONNECT",
@@ -282,6 +289,12 @@ export const translations: Record<string, Translations> = {
           "Applications with a connected interface, API, and database. I handle both the frontend and backend so they work together.",
         frontendDescription:
           "Responsive websites and application interfaces. I focus on clear navigation, useful interactions, and layouts that work on phones and desktops.",
+      },
+      employment: {
+        title: "Professional experience",
+        oneYear: "1 year",
+        kontur: "SKB Kontur",
+        ric: "NPC «RIC»",
       },
       education: {
         title: "Education",
@@ -457,8 +470,9 @@ export const translations: Record<string, Translations> = {
       aboutHeading: "Любопытство — характер.\nРазработка — призвание.",
       aboutIntro: "Мне важно, как всё работает. И какие ощущения оставляет.",
       practiceLabel: "01 / РАЗРАБОТКА",
-      educationLabel: "02 / ОБУЧЕНИЕ",
-      interestsLabel: "03 / ЗА ПРЕДЕЛАМИ КОДА",
+      employmentLabel: "02 / ОПЫТ РАБОТЫ",
+      educationLabel: "03 / ОБУЧЕНИЕ",
+      interestsLabel: "04 / ЗА ПРЕДЕЛАМИ КОДА",
       resumeLoading: "Подготовка PDF…",
       resumeError: "Не удалось создать PDF. Попробуйте ещё раз.",
       contactLabel: "БУДЕМ НА СВЯЗИ",
@@ -536,6 +550,12 @@ export const translations: Record<string, Translations> = {
           "Приложения, в которых интерфейс, API и база данных работают вместе. Беру на себя клиентскую и серверную части проекта.",
         frontendDescription:
           "Адаптивные сайты и интерфейсы приложений. Продумываю навигацию, взаимодействие с элементами и отображение на телефонах и компьютерах.",
+      },
+      employment: {
+        title: "Опыт работы",
+        oneYear: "1 год",
+        kontur: "СКБ Контур",
+        ric: "НПЦ «РИЦ»",
       },
       education: {
         title: "Образование",

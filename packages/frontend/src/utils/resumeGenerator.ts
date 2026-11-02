@@ -129,6 +129,11 @@ interface ResumeData {
   email: string;
   location: string;
   description: string;
+  employment: Array<{
+    company: string;
+    period: string;
+    duration: string;
+  }>;
   experience: Array<{
     position: string;
     company: string;
@@ -191,6 +196,10 @@ const RESUME_EN: ResumeData = {
   location: "Ekaterinburg, Russia",
   description:
     "I build web applications and Telegram bots with Vue.js, Node.js, and TypeScript, from the interface to backend logic. I focus on usability, performance, and code quality.",
+  employment: [
+    { company: "NPC «RIC»", period: "2024", duration: "1 year" },
+    { company: "SKB Kontur", period: "2022", duration: "1 year" },
+  ],
   experience: [
     {
       position: "Full-stack Developer",
@@ -199,14 +208,6 @@ const RESUME_EN: ResumeData = {
       description:
         "Full-stack development of personal and freelance projects. Building modern web applications and Telegram bots.",
       technologies: ["Vue.js", "Node.js", "TypeScript", "Telegram Bot API"],
-    },
-    {
-      position: "Frontend Developer",
-      company: "Personal & Freelance Projects",
-      period: "2023 - present",
-      description:
-        "Frontend development for personal and freelance projects. Creating user interfaces and web applications.",
-      technologies: ["Vue.js", "JavaScript", "CSS", "HTML"],
     },
   ],
   education: [
@@ -273,6 +274,10 @@ const RESUME_RU: ResumeData = {
   location: "Екатеринбург, Россия",
   description:
     "Разрабатываю веб-приложения и Telegram-ботов на Vue.js, Node.js и TypeScript: от интерфейса до серверной логики. Уделяю внимание удобству, производительности и качеству кода.",
+  employment: [
+    { company: "НПЦ «РИЦ»", period: "2024", duration: "1 год" },
+    { company: "СКБ Контур", period: "2022", duration: "1 год" },
+  ],
   experience: [
     {
       position: "Full-stack разработчик",
@@ -281,14 +286,6 @@ const RESUME_RU: ResumeData = {
       description:
         "Full-stack разработка личных и фриланс проектов. Создание современных веб-приложений и Telegram-ботов.",
       technologies: ["Vue.js", "Node.js", "TypeScript", "Telegram Bot API"],
-    },
-    {
-      position: "Frontend разработчик",
-      company: "Личные и фриланс проекты",
-      period: "2023 - настоящее время",
-      description:
-        "Frontend разработка личных и фриланс проектов. Создание пользовательских интерфейсов и веб-приложений.",
-      technologies: ["Vue.js", "JavaScript", "CSS", "HTML"],
     },
   ],
   education: [
@@ -419,6 +416,19 @@ export const createResumePDF = async (language: "en" | "ru") => {
   paragraph("FULL-STACK DEVELOPER", 10, accent, 4);
   paragraph(`${data.email}  |  ${data.location}`, 9, muted, 5);
   paragraph(data.description, 10, muted, 2);
+
+  section(label("Professional Experience", "Опыт работы"));
+  for (const job of data.employment) {
+    const detail = `${job.period} | ${job.duration}`;
+    ensureSpace(
+      blockHeight([
+        [job.company, 12],
+        [detail, 9],
+      ]),
+    );
+    paragraph(job.company, 12, ink, 1);
+    paragraph(detail, 9, muted, 4);
+  }
 
   section(label("Projects & Practice", "Проекты и практика"));
   for (const exp of data.experience) {

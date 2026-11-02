@@ -77,6 +77,21 @@
         </article>
       </div>
     </section>
+    <section class="about-detail-section about-employment-section">
+      <div class="about-section-heading">
+        <p class="eyebrow">{{ t("design.employmentLabel") }}</p>
+        <h2>{{ t("about.employment.title") }}</h2>
+      </div>
+      <div class="timeline">
+        <article v-for="job in employment" :key="job.id" class="timeline-item">
+          <div class="education-meta">
+            <span class="education-level">{{ job.duration }}</span>
+            <span class="timeline-period">{{ job.period }}</span>
+          </div>
+          <h3>{{ job.company }}</h3>
+        </article>
+      </div>
+    </section>
     <section class="about-detail-section">
       <div class="about-section-heading">
         <p class="eyebrow">{{ t("design.educationLabel") }}</p>
@@ -167,6 +182,21 @@ const services = computed(() => [
     icon: "code",
     description: t("about.practice.frontendDescription"),
     technologies: ["Vue.js", "JavaScript", "CSS", "HTML"],
+  },
+]);
+
+const employment = computed(() => [
+  {
+    id: 1,
+    company: t("about.employment.ric"),
+    period: "2024",
+    duration: t("about.employment.oneYear"),
+  },
+  {
+    id: 2,
+    company: t("about.employment.kontur"),
+    period: "2022",
+    duration: t("about.employment.oneYear"),
   },
 ]);
 
